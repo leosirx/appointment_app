@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useLogoutMutation } from '../slices/userApiSlice';
 import { logout } from '../slices/authSlice';
-import { CiUser } from "react-icons/ci";
+import { Dropdown } from 'flowbite-react';
 
 
 function Header() {
@@ -22,7 +22,7 @@ function Header() {
         console.error(err);
       }
     };
-  
+
 
   return (
     <>
@@ -32,25 +32,40 @@ function Header() {
                 <a href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
                     <img src="/logo.svg" className="h-14" alt="Appointment Logo" />
                 </a>
-                
                 <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
                     {userInfo ? (
-                        <>
-                            <a href="/" onClick={logoutHandler} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Logout</a>
-                            <a className="text-white    font-medium rounded-lg text-sm px-5 py-2.5  focus:outline-none ">{userInfo.userName}</a>
-                            <a href="/profile" className="text-white hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5  focus:outline-none ">
-                            <CiUser style={{color: 'red', fontSize: '22px'}}/>
-                            </a>
+                        <>  
+                            <Dropdown label={userInfo.userName} dismissOnClick={false} color="primary">
+                                <Dropdown.Header>
+                                    <img className="ml-3 w-8 h-8 rounded-full" src="/user.png" alt="user photo" />
+                                </Dropdown.Header>
+                                <Dropdown.Item>
+                                    <a href="/" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+                                </Dropdown.Item>    
+                                <Dropdown.Item>
+                                    <a href="/profile" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Profile</a>
+                                </Dropdown.Item>
+                                <Dropdown.Item>
+                                <div className="py-2">
+                                    <a href="/" onClick={logoutHandler} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+                                </div>
+                                </Dropdown.Item>
+                            </Dropdown>
                         </>
                     ) : (
-                        <a href="/login" className="text-white bg-purple-500 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Login</a>
+                        <>
+                            <a href="/login" className="text-white bg-purple-500 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Login</a>
+                        </>
+                        
                     )}
-                    <button data-collapse-toggle="navbar-dropdown" type="button" className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-dropdown" aria-expanded="false">
-                        <span className="sr-only">Open main menu</span>
-                        <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h15M1 7h15M1 13h15"/>
-                        </svg>
-                    </button>
+                    {!userInfo &&(
+                        <button data-collapse-toggle="navbar-dropdown" type="button" className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-dropdown" aria-expanded="false">
+                            <span className="sr-only">Open main menu</span>
+                            <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h15M1 7h15M1 13h15"/>
+                            </svg>
+                        </button>
+                    )}
                 </div>
                 
                 <div className="bg-sky-100 items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-dropdown">

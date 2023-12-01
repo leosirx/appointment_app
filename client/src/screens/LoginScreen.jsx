@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLoginMutation } from '../slices/userApiSlice';
 import { setCredentials } from '../slices/authSlice';
 import { toast } from 'react-toastify';
-import Loader from '../components/Loader';
+import { Spinner } from 'flowbite-react';
 
 const LoginScreen = () => {
     const [email, setEmail] = useState('');
@@ -84,7 +84,11 @@ const LoginScreen = () => {
                             Don’t have an account yet? <a href="/register" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</a>
                         </p>
                         </form>
-                        {isLoading && <Loader />}
+                        {isLoading && 
+                            <div className="text-center">
+                                <Spinner aria-label="Center-aligned spinner example" />
+                            </div>
+                        }
                         </div>
                         </div>
                 </div>
