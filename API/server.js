@@ -27,7 +27,6 @@ app.use('/api/users', userRoutes);
 app.use('/api/specialists', specialistRoutes);
 app.use('/api/customers', customerRoutes);
 
-
 if (process.env.MODE_ENV === 'production') {
   const __dirname = path.resolve();
   app.use(express.static(path.join(__dirname, '/client/dist')));
