@@ -5,6 +5,11 @@ import City from "../models/cityModel.js";
 //!import Specialty from "../models/specialistModel.js"; 
 //!Añade el modelo Michell
 
+const getAllSpecialist = asyncHandler(async (req, res) => {
+  const results = await Specialist.find();
+  return res.json(results);
+});
+
 // @desc    Auth specialist & get token
 // @route   POST /api/specialist/auth
 // @access  Public
@@ -232,6 +237,7 @@ const removeSpecialist = asyncHandler(async( req, res) => {
 });
 
 export {
+  getAllSpecialist,
   authSpecialist,
   registerSpecialist,
   logoutSpecialist,
