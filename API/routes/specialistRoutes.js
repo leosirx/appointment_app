@@ -1,5 +1,6 @@
 import express from 'express';
 import {
+  getAllSpecialist,
   authSpecialist,
   registerSpecialist,
   logoutSpecialist,
@@ -20,7 +21,11 @@ const limiter = rateLimit({
 
 router.use(limiter);
 
-router.post('/', registerSpecialist);
+router
+  .route('/')
+  .get(getAllSpecialist)
+  .post(registerSpecialist)
+
 router.post('/auth', authSpecialist);
 router.post('/logout', logoutSpecialist);
 router
