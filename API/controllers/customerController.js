@@ -2,6 +2,11 @@ import asyncHandler from 'express-async-handler';
 import Customer from '../models/customerModel.js';
 import generateToken from '../utils/generateToken.js';
 
+const getAllCustomer = asyncHandler(async (req, res) => {
+  const results = await Customer.find();
+  return res.json(results);
+});
+
 // @desc    Auth customer & get token
 // @route   POST /api/customers/auth
 // @access  Public
@@ -122,6 +127,7 @@ const updateCustomerProfile = asyncHandler(async (req, res) => {
 
 export {
   authCustomer,
+  getAllCustomer,
   registerCustomer,
   logoutCustomer,
   getCustomerProfile,
