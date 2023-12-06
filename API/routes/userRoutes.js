@@ -1,5 +1,6 @@
 import express from 'express';
 import {
+  getAllUser,
   authUser,
   registerUser,
   logoutUser,
@@ -19,7 +20,10 @@ const limiter = rateLimit({
 
 router.use(limiter);
 
-router.post('/', registerUser);
+router
+  .route('/')
+  .get(getAllUser)
+  .post(registerUser);
 router.post('/auth', authUser);
 router.post('/logout', logoutUser);
 router
