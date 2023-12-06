@@ -6,6 +6,7 @@ import connectDB from './config/db.js';
 import cookieParser from 'cookie-parser';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 import userRoutes from './routes/userRoutes.js';
+import customerRoutes from './routes/customerRoutes.js'
 import specialistRoutes from './routes/specialistRoutes.js';
 import cityRoutes from './routes/cityRoutes.js';
 import specialtyRoutes from './routes/specialtyRoutes.js';
@@ -26,6 +27,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use('/api/users', userRoutes);
+app.use('/api/customers', customerRoutes);
 app.use('/api/specialists', specialistRoutes);
 app.use('/api/customers', customer);
 app.use('/api/city', cityRoutes);
