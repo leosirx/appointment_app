@@ -5,6 +5,7 @@ import {
   logoutCustomer,
   getCustomerProfile,
   updateCustomerProfile,
+  getAllCustomer,
 } from '../controllers/customerController.js';
 import { protect } from '../middleware/authMiddleware.js';
 import rateLimit from 'express-rate-limit';
@@ -19,7 +20,11 @@ const limiter = rateLimit({
 
 router.use(limiter);
 
-router.post('/', registerCustomer);
+router
+  .route('/')
+  .get(getAllCustomer)
+  .post(registerCustomer)
+  
 router.post('/auth', authCustomer);
 router.post('/logout', logoutCustomer);
 router
