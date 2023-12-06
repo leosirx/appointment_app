@@ -72,6 +72,12 @@ customerSchema.pre('save', async function (next) {
   this.password = await bcrypt.hash(this.password, salt);
 });
 
+customerSchema.methods.toJSON = function () {
+  const customerObject = this.toObject();
+  delete customerObject.password; 
+  return customerObject;
+};
+
 const Customer = mongoose.model('Customer', customerSchema);
 
 export default Customer;

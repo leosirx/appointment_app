@@ -3,13 +3,16 @@ import Customer from "../models/customerModel.js";
 import generateToken from "../utils/generateToken.js";
 import City from "../models/cityModel.js";
 
+// @desc    List customers
+// @route   POST /api/customers
+// @access  Public
 const getAllCustomer = asyncHandler(async (req, res) => {
   const results = await Customer.find();
   return res.json(results);
 });
 
-// @desc    Auth specialist & get token
-// @route   POST /api/specialist/auth
+// @desc    Auth customer & get token
+// @route   POST /api/customers/auth
 // @access  Public
 const authCustomer = asyncHandler(async (req, res) => {
   // Get values - destructure
@@ -212,6 +215,7 @@ const removeCustomer = asyncHandler(async( req, res) => {
 export {
   getAllCustomer,
   authCustomer,
+  getAllCustomer,
   registerCustomer,
   logoutCustomer,
   getCustomerProfile,
