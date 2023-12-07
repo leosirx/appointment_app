@@ -3,8 +3,8 @@ function Hero() {
   return (
     <>
         <main>
-            <div className="mt-20 py-24 px-6 text-center dark:bg-gray-900 ">
-                <h1 className="text-black-600 mt-2 mb-14 p-8 text-5xl  tracking-tight md:text-5xl xl:text-5xl s:text-4xl">
+            <div className="mt-20 py-24 px-6 text-center bg-white dark:bg-black ">
+                <h1 className="text-slate-500 dark:text-white mt-2 mb-14 p-8 text-5xl  tracking-tight md:text-5xl xl:text-5xl s:text-4xl">
                     Cuida tu salud y busca un <br />especialista 👩‍⚕️
                 </h1>
                 <input type="text" className="border-1 mr-5  p-3 inline-block rounded shadow-[0_4px_9px_-4px_#3b71ca]" />
