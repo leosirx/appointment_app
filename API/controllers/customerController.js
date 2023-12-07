@@ -215,7 +215,6 @@ const removeCustomer = asyncHandler(async( req, res) => {
 export {
   getAllCustomer,
   authCustomer,
-  getAllCustomer,
   registerCustomer,
   logoutCustomer,
   getCustomerProfile,

@@ -10,8 +10,20 @@ import {
 } from '../controllers/specialistController.js';
 import { protect } from '../middleware/authMiddleware.js';
 import rateLimit from 'express-rate-limit';
+import Specialist from '../models/specialistModel.js';
 
 const router = express.Router();
+
+// Defines a route handler for a GET request to the root URL ("/") and populates the "cityId" field for each specialist
+router.get('/', async (req, res) => {
+  try {
+    const specialists = await Specialist.find().populate('cityId');
+    res.json(specialists);
+  } catch (error) {
+    console.error('Error fetching specialists:', error);
+    res.status(500).json({ error: 'Error fetching specialists' });
+  }
+});
 
 // Apply rate limiting to all routes
 const limiter = rateLimit({
