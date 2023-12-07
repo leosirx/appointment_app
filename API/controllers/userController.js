@@ -2,6 +2,11 @@ import asyncHandler from 'express-async-handler';
 import User from '../models/userModel.js';
 import generateToken from '../utils/generateToken.js';
 
+const getAllUser = asyncHandler(async (req, res) => {
+  const results = await User.find();
+  return res.json(results);
+});
+
 // @desc    Auth user & get token
 // @route   POST /api/users/auth
 // @access  Public
@@ -79,7 +84,6 @@ const logoutUser = (req, res) => {
 // @access  Private
 const getUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
-  console.log(req.user._id);
   if (user) {
     res.json({
       _id: user._id,
@@ -121,6 +125,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 });
 
 export {
+  getAllUser,
   authUser,
   registerUser,
   logoutUser,

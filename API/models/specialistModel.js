@@ -5,11 +5,11 @@ const specialistSchema = mongoose.Schema(
     {
       firstName: {
         type: String,
-        //required: true
+        required: true
       },
       lastName: {
         type: String,
-        //required: true
+        required: true
       },
       description: {
         type: String,
@@ -75,6 +75,12 @@ specialistSchema.pre('save', async function (next) {
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
 });
+
+specialistSchema.methods.toJSON = function () {
+  const specialistObject = this.toObject();
+  delete specialistObject.password; 
+  return specialistObject;
+};
 
 const Specialist = mongoose.model('Specialist', specialistSchema);
 
