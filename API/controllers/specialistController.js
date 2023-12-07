@@ -2,19 +2,14 @@ import asyncHandler from "express-async-handler";
 import Specialist from "../models/specialistModel.js";
 import generateToken from "../utils/generateToken.js";
 import City from "../models/cityModel.js";
-//!import Specialty from "../models/specialistModel.js"; 
-//!Añade el modelo Michell
+import Specialty from "../models/specialtyModel.js"; 
 
 const getAllSpecialist = asyncHandler(async (req, res) => {
   const results = await Specialist.find();
   return res.json(results);
 });
 
-// @desc    Auth specialist & get token
-// @route   POST /api/specialist/auth
-// @access  Public
 const authSpecialist = asyncHandler(async (req, res) => {
-  // Get values - destructure
   const { email, password } = req.body;
 
   const specialist = await Specialist.findOne({ email });
@@ -44,9 +39,6 @@ const authSpecialist = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc    Register a new specialsit
-// @route   POST /api/specialists
-// @access  Public
 const registerSpecialist = asyncHandler(async (req, res) => {
   const { firstName, lastName, description, phone, email, password, birthday, age, role, active, specialtyId, cityId } = req.body;
 
@@ -54,7 +46,7 @@ const registerSpecialist = asyncHandler(async (req, res) => {
 
   if (specialistExists) {
     res.status(400);
-    throw new Error("SpecialistName already exists");
+    throw new Error("email already exists");
   }
 
   const specialist = await Specialist.create({
@@ -77,15 +69,14 @@ const registerSpecialist = asyncHandler(async (req, res) => {
 
     await City.findByIdAndUpdate(
       cityId,
-      { $push: { specialists: Specialist._id } },
+      { $push: { specialistId: Specialist._id } },
       { new: true }
     );
-    //!descomenta este codigo Michell, cuando agreges la tabla
-    /*await Specialty.findByIdAndUpdate(
+    await Specialty.findByIdAndUpdate(
       specialtyId,
-      { $push: { specialists: Specialist._id } },
+      { $push: { specialistId: Specialist._id } },
       { new: true }
-    );*/
+    );
 
     res.status(201).json({
       _id: specialist._id,
@@ -107,9 +98,6 @@ const registerSpecialist = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc    Logout specialsit / clear cookie
-// @route   POST /api/specialsits/logout
-// @access  Public
 const logoutSpecialist = (req, res) => {
   try {
     res.cookie("jwt", "", {
@@ -149,6 +137,30 @@ const getSpecialistProfile = asyncHandler(async (req, res) => {
   }
 });
 
+const getOneSpecialist = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const specialist = await Specialist.findById(id);
+  if (specialist) {
+    res.json({
+      _id: specialist._id,
+      firstName: specialist.firstName,
+      lastName: specialist.lastName,
+      description: specialist.description,
+      phone: specialist.phone,
+      email: specialist.email,
+      birthday: specialist.birthday,
+      age: specialist.age,
+      role: specialist.role,
+      active: specialist.active,
+      specialtyId: specialist.specialtyId,
+      cityId: specialist.cityId
+    });
+  } else {
+    res.status(404);
+    throw new Error("specialist not found");
+  }
+});
+
 // @desc    Update specialist profile
 // @route   PUT /api/specialists/profile
 // @access  Private
@@ -173,34 +185,33 @@ const updateSpecialistProfile = asyncHandler(async (req, res) => {
     if (req.body.cityId) {
       await City.findByIdAndUpdate(
         specialist.cityId,
-        { $pull: { specialists: specialist._id } }
+        { $pull: { specialistId: specialist._id } }
       );
 
       await City.findByIdAndUpdate(
         req.body.cityId,
-        { $push: { specialists: updatedSpecialist._id } },
+        { $push: { specialistId: updatedSpecialist._id } },
         { new: true }
       );
 
       updatedSpecialist.cityId = req.body.cityId;
       await updatedSpecialist.save();
     }
-    //!descomenta este codigo Michell, cuando agreges la tabla
-    /*if (req.body.specialtyId) {
+    if (req.body.specialtyId) {
       await Specialty.findByIdAndUpdate(
         specialist.specialtyId,
-        { $pull: { specialists: specialist._id } }
+        { $pull: { specialistId: specialist._id } }
       );
 
       await Specialty.findByIdAndUpdate(
         req.body.specialtyId,
-        { $push: { specialists: updatedSpecialist._id } },
+        { $push: { specialistId: updatedSpecialist._id } },
         { new: true }
       );
 
       updatedSpecialist.specialtyId = req.body.specialtyId;
       await updatedSpecialist.save();
-    }*/
+    }
 
     res.json({
       _id: updatedSpecialist._id,
@@ -238,6 +249,7 @@ const removeSpecialist = asyncHandler(async( req, res) => {
 
 export {
   getAllSpecialist,
+  getOneSpecialist,
   authSpecialist,
   registerSpecialist,
   logoutSpecialist,

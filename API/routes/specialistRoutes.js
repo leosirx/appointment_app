@@ -1,6 +1,7 @@
 import express from 'express';
 import {
   getAllSpecialist,
+  getOneSpecialist,
   authSpecialist,
   registerSpecialist,
   logoutSpecialist,
@@ -45,5 +46,9 @@ router
   .get(protect, getSpecialistProfile)
   .put(protect, updateSpecialistProfile)
   .delete(protect, removeSpecialist)
+
+router
+  .route('/id')
+  .get(protect, getOneSpecialist)
 
 export default router;
