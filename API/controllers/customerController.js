@@ -22,7 +22,7 @@ const authCustomer = asyncHandler(async (req, res) => {
   
   if(customer.active === true){
     if (customer && (await customer.matchPassword(password))) {
-      generateToken(res, null, customer._id);
+      generateToken(res, null, null, customer._id);
 
       res.json({
         _id: customer._id,
@@ -73,7 +73,7 @@ const registerCustomer = asyncHandler(async (req, res) => {
   });
 
   if (customer) {
-    generateToken(res, null,customer._id);
+    generateToken(res, null, null, customer._id);
 
     await City.findByIdAndUpdate(
       cityId,
@@ -213,7 +213,6 @@ const removeCustomer = asyncHandler(async( req, res) => {
 });
 
 export {
-  getAllCustomer,
   authCustomer,
   registerCustomer,
   logoutCustomer,

@@ -1,7 +1,6 @@
 import express from 'express';
 import {
   authCustomer,
-  getAllCustomer,
   registerCustomer,
   logoutCustomer,
   getCustomerProfile,
