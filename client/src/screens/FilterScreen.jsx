@@ -17,7 +17,7 @@ const FilterScreen = () => {
     }
   };
 
-  const { data: specialists, isLoading, error } = useQuery('specialists', fetchSpecialists);
+  const { data: specialists=[], isLoading, error } = useQuery('specialists', fetchSpecialists);
   console.log(specialists);
   if (error) {
     console.error('Error fetching specialists:', error);
@@ -51,7 +51,8 @@ const FilterScreen = () => {
             <p>Loading...</p>
           ) : (
             (specialists || []).map((specialist, i) => {
-              const cityMatches = cityFilter
+                console.log('City:', specialist.cityId);
+                const cityMatches = cityFilter
                 ? specialist.cityId && specialist.cityId.name
                   ? specialist.cityId.name.toLowerCase().includes(cityFilter.toLowerCase())
                   : false
@@ -79,9 +80,11 @@ const FilterScreen = () => {
                         <div className="space-y-1 font-medium dark:text-white">
                           <div>{specialist.firstName}</div>
                           <div>{specialist.phone}</div>
+                    
                             <div className="text-sm text-gray-500 dark:text-gray-400">
-                                {specialist.cityId ? specialist.cityId.name : 'City Name Not Available'}
-                            </div>
+                             {specialist.cityId ? specialist.cityId.name : 'City Name Not Available'}
+                             </div>
+                            
                         </div>
                       </Avatar>
                     </div>
