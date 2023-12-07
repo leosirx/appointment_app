@@ -5,7 +5,13 @@ const specialtySchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true
-    }
+    },
+    specialistId: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'Specialist',
+        },
+      ],
     },
     {
         timestamps: true,
