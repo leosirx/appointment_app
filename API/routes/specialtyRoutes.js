@@ -12,21 +12,12 @@ import { protect } from '../middleware/authMiddleware.js';
 const router = express.Router();
 
 router.get('/', getAllSpecialties);
-router.get('/', getSpecialtyById);
+router.post('/', createSpecialty);
 router.get('/:specialtyId/specialists', getSpecialistsBySpecialty);
 router
     .route('/:id')
-    .post(protect, createSpecialty)
+    .get(protect, getSpecialtyById)
     .put(protect, updateSpecialty)
     .delete(protect, deleteSpecialty);
 
-
-//  Routes used for testing
-// router.post('/', createSpecialty);
-// router.get('/', getAllSpecialties);
-// router.get('/:id', getSpecialtyById);
-// router.put('/:id', updateSpecialty);
-// router.delete('/:id', deleteSpecialty);
-// router.get('/:specialtyId/specialists', getSpecialistsBySpecialty);
-
-export default router; 
+export default router;
