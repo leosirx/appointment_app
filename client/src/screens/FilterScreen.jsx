@@ -9,7 +9,7 @@ import { useLocation } from 'react-router-dom';
 const FilterScreen = () => {
   const [cityFilter, setCityFilter] = useState('');
   const [nameFilter, setNameFilter] = useState('');
-  const [specialityFilter, setSpecialityFilter] = useState('');
+  const [specialtyFilter, setSpecialtyFilter] = useState('');
   const [page, setPage] = useState(1);
 
   // Obtiene la ubicación actual
@@ -21,7 +21,7 @@ const FilterScreen = () => {
   useEffect(() => {
     setCityFilter('');
     setNameFilter('');
-    setSpecialityFilter(searchTerm);
+    setSpecialtyFilter(searchTerm);
   }, [searchTerm]);
 
   const fetchSpecialists = async (pageNum = 1) => {
@@ -39,12 +39,12 @@ const FilterScreen = () => {
     // Si cambia algún filtro, reiniciar la paginación
     setPage(1);
     refetch();
-  }, [cityFilter, nameFilter, specialityFilter, refetch]);
+  }, [cityFilter, nameFilter, specialtyFilter, refetch]);
 
   if (error) {
     console.error('Error fetching specialists:', error);
   }
-  
+
   return (
     <>
       <section className="p-40">
@@ -63,9 +63,9 @@ const FilterScreen = () => {
           />
           <input
             type="text"
-            placeholder="Filter by Speciality"
-            value={specialityFilter}
-            onChange={(e) => setSpecialityFilter(e.target.value)}
+            placeholder="Filter by Specialty"
+            value={specialtyFilter}
+            onChange={(e) => setSpecialtyFilter(e.target.value)}
           />
         </div>
         {isLoading ? (
@@ -90,6 +90,7 @@ const FilterScreen = () => {
         >
           <div className="grid md:grid-cols-3 place-items-center gap-4">
             {(specialists || []).map((specialist, i) => {
+              
               const cityMatches = cityFilter
                 ? specialist.cityId && specialist.cityId.name
                   ? specialist.cityId.name.toLowerCase().includes(cityFilter.toLowerCase())
@@ -100,13 +101,13 @@ const FilterScreen = () => {
                 ? specialist.firstName && specialist.firstName.toLowerCase().includes(nameFilter.toLowerCase())
                 : true;
 
-              const specialityMatches = specialityFilter
-                ? specialist.specialityId && specialist.specialityId.name
-                  ? specialist.specialityId.name.toLowerCase().includes(specialityFilter.toLowerCase())
+              const specialtyMatches = specialtyFilter
+                ? specialist.specialtyId && specialist.specialtyId.name
+                  ? specialist.specialtyId.name.toLowerCase().includes(specialtyFilter.toLowerCase())
                   : false
                 : true;
 
-              if (!cityMatches || !nameMatches || !specialityMatches) {
+              if (!cityMatches || !nameMatches || !specialtyMatches) {
                 return null;
               }
 
@@ -116,11 +117,11 @@ const FilterScreen = () => {
                     <div className="flex flex-wrap gap-2 w-50 h-50">
                       <Avatar img="/logo.svg" rounded size="lg">
                         <div className="space-y-1 font-medium dark:text-white">
-                          <div className="text-sm dark:text-gray-400">
-                            {specialist.specialityId ? specialist.specialityId.name : 'Speciality Not Available'}
-                          </div>
+                          <h4>
+                            {specialist.specialtyId ? specialist.specialtyId.name : 'Specialty Not Available'}
+                          </h4>
                           <div>{specialist.firstName}</div>
-                          <div>{specialist.phone}</div>
+                          <div>Tel: {specialist.phone}</div>
                           <div className="text-sm text-gray-500 dark:text-gray-400">
                             {specialist.cityId ? specialist.cityId.name : 'City Name Not Available'}
                           </div>

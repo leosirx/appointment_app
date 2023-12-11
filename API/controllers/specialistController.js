@@ -2,11 +2,12 @@ import asyncHandler from "express-async-handler";
 import Specialist from "../models/specialistModel.js";
 import generateToken from "../utils/generateToken.js";
 import City from "../models/cityModel.js";
-import Specialty from "../models/specialtyModel.js"; 
+import Specialty from "../models/specialtyModel.js";
+
 
 const getAllSpecialist = asyncHandler(async (req, res) => {
-  const results = await Specialist.find().populate('specialtyId').populate('cityId').populate('diaryId');
-  return res.json(results);
+  const results = await Specialist.find()
+  return res.json(results)
 });
 
 const authSpecialist = asyncHandler(async (req, res) => {

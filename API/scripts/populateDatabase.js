@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import faker from 'faker';
 import Specialist from '../models/specialistModel.js';
 import City from '../models/cityModel.js';
-import Speciality from '../models/specialtyModel.js';
+import Specialty from '../models/specialtyModel.js';
 import Customer from '../models/customerModel.js';
 
 // Conexión a la base de datos
@@ -24,7 +24,7 @@ const populateDatabase = async () => {
     const createdCities = await City.create(cities.map(name => ({ name })));
 
     // Crear especialidades
-    const createdSpecialities = await Speciality.create(specialities.map(name => ({ name })));
+    const createdSpecialities = await Specialty.create(specialities.map(name => ({ name })));
 
     // Crear especialistas
     const specialistsData = Array.from({ length: 50 }, () => ({
@@ -35,7 +35,7 @@ const populateDatabase = async () => {
       password: 'password123',
       phone: '123456789',
       cityId: getRandomElement(createdCities)._id,
-      specialityId: getRandomElement(createdSpecialities)._id,
+      specialtyId: getRandomElement(createdSpecialities)._id,
     }));
 
     await Specialist.create(specialistsData);

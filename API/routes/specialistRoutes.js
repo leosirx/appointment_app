@@ -18,7 +18,9 @@ const router = express.Router();
 // Defines a route handler for a GET request to the root URL ("/") and populates the "cityId" field for each specialist
 router.get('/', async (req, res) => {
   try {
-    const specialists = await Specialist.find().populate('cityId');
+    const specialists = await Specialist.find()
+    .populate('cityId')
+    .populate('specialtyId') ;
     if (!specialists) {
       res.status(404).json({ message: 'No specialists found' });
       return;
