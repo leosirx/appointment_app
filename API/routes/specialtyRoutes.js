@@ -13,16 +13,16 @@ const router = express.Router();
 
 router.get('/', getAllSpecialties);
 router.get('/', getSpecialtyById);
+router.post('/',protect, createSpecialty)
 router.get('/:specialtyId/specialists', getSpecialistsBySpecialty);
 router
-    .route('/:id')
-    .post(protect, createSpecialty)
-    .put(protect, updateSpecialty)
-    .delete(protect, deleteSpecialty);
+.route('/:id')
+.put(protect, updateSpecialty)
+.delete(protect, deleteSpecialty);
 
 
 //  Routes used for testing
-// router.post('/', createSpecialty);
+ //router.post('/', createSpecialty);
 // router.get('/', getAllSpecialties);
 // router.get('/:id', getSpecialtyById);
 // router.put('/:id', updateSpecialty);

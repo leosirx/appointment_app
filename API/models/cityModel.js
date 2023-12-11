@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const citySchema =  mongoose.Schema({
   name: {
     type: String,
-    require: true
+    required: true
   },
   specialistId: [
     {
