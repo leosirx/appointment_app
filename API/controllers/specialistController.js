@@ -5,7 +5,7 @@ import City from "../models/cityModel.js";
 import Specialty from "../models/specialtyModel.js"; 
 
 const getAllSpecialist = asyncHandler(async (req, res) => {
-  const results = await Specialist.find();
+  const results = await Specialist.find().populate('specialtyId').populate('cityId').populate('diaryId');
   return res.json(results);
 });
 
@@ -69,12 +69,12 @@ const registerSpecialist = asyncHandler(async (req, res) => {
 
     await City.findByIdAndUpdate(
       cityId,
-      { $push: { specialistId: Specialist._id } },
+      { $push: { specialistId: specialist._id } },
       { new: true }
     );
     await Specialty.findByIdAndUpdate(
       specialtyId,
-      { $push: { specialistId: Specialist._id } },
+      { $push: { specialistId: specialist._id } },
       { new: true }
     );
 
@@ -115,7 +115,7 @@ const logoutSpecialist = (req, res) => {
 // @route   GET /api/specialists/profile
 // @access  Private
 const getSpecialistProfile = asyncHandler(async (req, res) => {
-  const specialist = await Specialist.findById(req.specialist._id).populate('specialtyId').populate('cityId');
+  const specialist = await Specialist.findById(req.specialist._id).populate('specialtyId').populate('cityId').populate('diaryId');
   if (specialist) {
     res.json({
       _id: specialist._id,
@@ -139,7 +139,7 @@ const getSpecialistProfile = asyncHandler(async (req, res) => {
 
 const getOneSpecialist = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const specialist = await Specialist.findById(id);
+  const specialist = await Specialist.findById(id).populate('specialtyId').populate('cityId').populate('diaryId');
   if (specialist) {
     res.json({
       _id: specialist._id,

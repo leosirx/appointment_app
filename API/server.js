@@ -11,6 +11,7 @@ import specialistRoutes from './routes/specialistRoutes.js';
 import cityRoutes from './routes/cityRoutes.js';
 import specialtyRoutes from './routes/specialtyRoutes.js';
 import customer from './routes/customerRoutes.js'
+import diaryRoutes from './routes/diaryRoutes.js'
 
 const port = process.env.PORT || 5000;
 
@@ -32,6 +33,7 @@ app.use('/api/specialists', specialistRoutes);
 app.use('/api/customers', customer);
 app.use('/api/city', cityRoutes);
 app.use('/api/specialty', specialtyRoutes);
+app.use('/api/diary', diaryRoutes);
 
 
 if (process.env.MODE_ENV === 'production') {
@@ -51,3 +53,5 @@ app.use(notFound);
 app.use(errorHandler);
 
 app.listen(port, () => console.log(`Server started on port ${port}`));
+
+export default app;
