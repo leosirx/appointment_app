@@ -15,7 +15,7 @@ router
     .get(getAllCity)
     .post(registerCity);
 router
-  .route('/id')
+  .route('/:id')
   .get(protect, getOneCity)
   .put(protect, updateCity)
   .delete(protect, removeCity);
