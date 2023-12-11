@@ -19,6 +19,10 @@ const router = express.Router();
 router.get('/', async (req, res) => {
   try {
     const specialists = await Specialist.find().populate('cityId');
+    if (!specialists) {
+      res.status(404).json({ message: 'No specialists found' });
+      return;
+    }
     res.json(specialists);
   } catch (error) {
     console.error('Error fetching specialists:', error);

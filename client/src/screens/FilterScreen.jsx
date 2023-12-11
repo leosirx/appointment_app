@@ -3,6 +3,7 @@ import { Card, Avatar } from 'flowbite-react';
 import { useQuery, useInfiniteQuery } from 'react-query';
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { useLocation } from 'react-router-dom';
 
 
 const FilterScreen = () => {
@@ -11,12 +12,24 @@ const FilterScreen = () => {
   const [specialityFilter, setSpecialityFilter] = useState('');
   const [page, setPage] = useState(1);
 
-const fetchSpecialists = async (pageNum = 1) => {
-  const response = await axios.get(`/api/specialists?page=${pageNum}`).catch(() => {
-    throw new Error('Error fetching specialists');
-  });
-  return response.data;
-};
+  // Obtiene la ubicación actual
+  const location = useLocation();
+
+  // Extrae el término de búsqueda de la URL
+  const searchTerm = new URLSearchParams(location.search).get('search') || '';
+
+  useEffect(() => {
+    setCityFilter('');
+    setNameFilter('');
+    setSpecialityFilter(searchTerm);
+  }, [searchTerm]);
+
+  const fetchSpecialists = async (pageNum = 1) => {
+    const response = await axios.get(`/api/specialists?page=${pageNum}`).catch(() => {
+        throw new Error('Error fetching specialists');
+    });
+    return response.data;
+  };
 
   const { data: specialists = [], isLoading, error, refetch } = useQuery(['specialists', page], () => fetchSpecialists(page), {
     keepPreviousData: true,
@@ -103,6 +116,9 @@ const fetchSpecialists = async (pageNum = 1) => {
                     <div className="flex flex-wrap gap-2 w-50 h-50">
                       <Avatar img="/logo.svg" rounded size="lg">
                         <div className="space-y-1 font-medium dark:text-white">
+                          <div className="text-sm dark:text-gray-400">
+                            {specialist.specialityId ? specialist.specialityId.name : 'Speciality Not Available'}
+                          </div>
                           <div>{specialist.firstName}</div>
                           <div>{specialist.phone}</div>
                           <div className="text-sm text-gray-500 dark:text-gray-400">
@@ -112,9 +128,7 @@ const fetchSpecialists = async (pageNum = 1) => {
                       </Avatar>
                     </div>
                     <a href="#">
-                      <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-                        Cardiología - especialidad con más de 7 años de experiencia...
-                      </h5>
+                        <div>{specialist.description}</div>
                     </a>
                     <div className="mb-5 mt-2.5 flex items-center">
                       {/* ... (código anterior) */}

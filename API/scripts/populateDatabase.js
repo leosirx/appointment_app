@@ -3,16 +3,16 @@ import faker from 'faker';
 import Specialist from '../models/specialistModel.js';
 import City from '../models/cityModel.js';
 import Speciality from '../models/specialtyModel.js';
+import Customer from '../models/customerModel.js';
 
 // Conexión a la base de datos
 mongoose.connect('mongodb://localhost:27017/appointmentDB', {
   useNewUrlParser: true,
-  useUnifiedTopology: true,
 });
 
 // Datos ficticios
-const cities = ['City A', 'City B', 'City C'];
-const specialities = ['Cardiology', 'Dermatology', 'Ophthalmology'];
+const cities = ['Bogota', 'Lima', 'Buenos Aires', 'Caracas', 'Mexico DF'];
+const specialities = ['Cardiology', 'Dermatology', 'Ophthalmology', 'Neurology'];
 
 // Función para generar datos ficticios
 const getRandomElement = (array) => array[Math.floor(Math.random() * array.length)];
@@ -31,6 +31,7 @@ const populateDatabase = async () => {
       firstName: faker.name.firstName(),
       lastName: faker.name.lastName(),
       email: faker.internet.email(),
+      description: 'No hay nadie que ame el dolor mismo, que lo busque, lo encuentre y lo quiera, simplemente porque es el dolor',
       password: 'password123',
       phone: '123456789',
       cityId: getRandomElement(createdCities)._id,
@@ -38,6 +39,17 @@ const populateDatabase = async () => {
     }));
 
     await Specialist.create(specialistsData);
+
+    // Crear clientes
+    const customersData = Array.from({ length: 50 }, () => ({
+      firstName: faker.name.firstName(),
+      lastName: faker.name.lastName(),
+      email: faker.internet.email(),
+      password: 'password123',
+      phone: '123456789',
+    }));
+
+    await Customer.create(customersData);
 
     console.log('Database populated successfully');
   } catch (error) {
