@@ -1,58 +1,83 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, Avatar } from 'flowbite-react';
-import { useQuery } from 'react-query';
+import { useQuery, useInfiniteQuery } from 'react-query';
 import axios from 'axios';
+import InfiniteScroll from 'react-infinite-scroll-component';
+
 
 const FilterScreen = () => {
   const [cityFilter, setCityFilter] = useState('');
   const [nameFilter, setNameFilter] = useState('');
   const [specialityFilter, setSpecialityFilter] = useState('');
+  const [page, setPage] = useState(1);
 
-  const fetchSpecialists = async () => {
-    try {
-      const response = await axios.get('/api/specialists');
-      return response.data;
-    } catch (error) {
-      throw new Error('Error fetching specialists');
-    }
-  };
+const fetchSpecialists = async (pageNum = 1) => {
+  const response = await axios.get(`/api/specialists?page=${pageNum}`).catch(() => {
+    throw new Error('Error fetching specialists');
+  });
+  return response.data;
+};
 
-  const { data: specialists=[], isLoading, error } = useQuery('specialists', fetchSpecialists);
-  console.log(specialists);
+  const { data: specialists = [], isLoading, error, refetch } = useQuery(['specialists', page], () => fetchSpecialists(page), {
+    keepPreviousData: true,
+  });
+
+  useEffect(() => {
+    // Si cambia algún filtro, reiniciar la paginación
+    setPage(1);
+    refetch();
+  }, [cityFilter, nameFilter, specialityFilter, refetch]);
+
   if (error) {
     console.error('Error fetching specialists:', error);
   }
-
+  
   return (
     <>
       <section className="p-40">
         <div className=" flex items-center justify-center py-4 md:py-8 flex-wrap gap-4">
-            <input
-                type="text"
-                placeholder="Filter by city"
-                value={cityFilter}
-                onChange={(e) => setCityFilter(e.target.value)}
-            />
-            <input
-                type="text"
-                placeholder="Filter by name"
-                value={nameFilter}
-                onChange={(e) => setNameFilter(e.target.value)}
-            />
-            <input
-                type="text"
-                placeholder="Filter by Speciality"
-                value={specialityFilter}
-                onChange={(e) => setSpecialityFilter(e.target.value)}
-            />
+          <input
+            type="text"
+            placeholder="Filter by city"
+            value={cityFilter}
+            onChange={(e) => setCityFilter(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Filter by name"
+            value={nameFilter}
+            onChange={(e) => setNameFilter(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Filter by Speciality"
+            value={specialityFilter}
+            onChange={(e) => setSpecialityFilter(e.target.value)}
+          />
         </div>
-        <div className="grid md:grid-cols-3 place-items-center gap-4">
-          {isLoading ? (
-            <p>Loading...</p>
-          ) : (
-            (specialists || []).map((specialist, i) => {
-                console.log('City:', specialist.cityId);
-                const cityMatches = cityFilter
+        {isLoading ? (
+          <div className="text-center">
+            <div role="status">
+                <svg aria-hidden="true" className="inline w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+                    <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+                </svg>
+                <span className="sr-only">Loading...</span>
+            </div>
+        </div>
+        ) : (
+      
+        <InfiniteScroll
+          dataLength={specialists.length}
+          next={() => setPage(prevPage => prevPage + 1)}
+          hasMore={!isLoading && specialists.length === page * 9}
+          loader={<p className='text-center mt-10'>Loading...</p>}
+          endMessage={<p className='text-center mt-10'>No hay más resultados.</p>}
+          scrollThreshold={0.7}
+        >
+          <div className="grid md:grid-cols-3 place-items-center gap-4">
+            {(specialists || []).map((specialist, i) => {
+              const cityMatches = cityFilter
                 ? specialist.cityId && specialist.cityId.name
                   ? specialist.cityId.name.toLowerCase().includes(cityFilter.toLowerCase())
                   : false
@@ -64,9 +89,9 @@ const FilterScreen = () => {
 
               const specialityMatches = specialityFilter
                 ? specialist.specialityId && specialist.specialityId.name
-                 ? specialist.specialityId.name.toLowerCase().includes(specialityFilter.toLowerCase())
-                 : false
-                : true ;
+                  ? specialist.specialityId.name.toLowerCase().includes(specialityFilter.toLowerCase())
+                  : false
+                : true;
 
               if (!cityMatches || !nameMatches || !specialityMatches) {
                 return null;
@@ -80,11 +105,9 @@ const FilterScreen = () => {
                         <div className="space-y-1 font-medium dark:text-white">
                           <div>{specialist.firstName}</div>
                           <div>{specialist.phone}</div>
-                    
-                            <div className="text-sm text-gray-500 dark:text-gray-400">
-                             {specialist.cityId ? specialist.cityId.name : 'City Name Not Available'}
-                             </div>
-                            
+                          <div className="text-sm text-gray-500 dark:text-gray-400">
+                            {specialist.cityId ? specialist.cityId.name : 'City Name Not Available'}
+                          </div>
                         </div>
                       </Avatar>
                     </div>
@@ -94,64 +117,24 @@ const FilterScreen = () => {
                       </h5>
                     </a>
                     <div className="mb-5 mt-2.5 flex items-center">
-                        <svg
-                        className="h-5 w-5 text-yellow-300"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg"
-                        >
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                        </svg>
-                        <svg
-                        className="h-5 w-5 text-yellow-300"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg"
-                        >
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                        </svg>
-                        <svg
-                        className="h-5 w-5 text-yellow-300"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg"
-                        >
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                        </svg>
-                        <svg
-                        className="h-5 w-5 text-yellow-300"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg"
-                        >
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                        </svg>
-                        <svg
-                        className="h-5 w-5 text-yellow-300"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg"
-                        >
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                        </svg>
-                        <span className="ml-3 mr-2 rounded bg-cyan-100 px-2.5 py-0.5 text-xs font-semibold text-cyan-800 dark:bg-cyan-200 dark:text-cyan-800">
-                        5.0
-                        </span>
+                      {/* ... (código anterior) */}
                     </div>
                     <div className="flex items-center justify-between">
-                        <a
+                      <a
                         href="#"
                         className="rounded-lg bg-cyan-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-cyan-800 focus:outline-none focus:ring-4 focus:ring-cyan-300 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800"
-                        >
+                      >
                         Solicitar cita
-                        </a>
+                      </a>
                     </div>
                   </Card>
                 </div>
               );
-            })
-          )}
-        </div>
+            })}
+          </div>
+        </InfiniteScroll>
+      )}
+        
       </section>
     </>
   );
