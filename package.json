@@ -27,6 +27,9 @@
     "react-loading-skeleton": "^3.3.1"
   },
   "devDependencies": {
-    "concurrently": "^8.2.2"
+    "@testing-library/jest-dom": "^6.1.5",
+    "@testing-library/react": "^14.1.2",
+    "concurrently": "^8.2.2",
+    "jest": "^29.7.0"
   }
 }

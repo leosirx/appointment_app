@@ -1,6 +1,5 @@
-// Hero.js
-
 import { useNavigate } from 'react-router-dom';
+import { Badge } from 'flowbite-react';
 
 function Hero() {
   const navigate = useNavigate();
@@ -19,7 +18,7 @@ function Hero() {
       <main>
         <div className="mt-20 py-24 px-6 text-center bg-white dark:bg-black ">
           <h1 className="text-slate-500 dark:text-white mt-2 mb-14 p-8 text-5xl  tracking-tight md:text-5xl xl:text-5xl s:text-4xl">
-            Cuida tu salud y busca un <br />especialista 👩‍⚕️
+          Take care of your health and look for a <br />specialist 👩‍⚕️
           </h1>
           <div className="w-96 mx-auto">
             <form onSubmit={handleSearch}>
@@ -35,6 +34,19 @@ function Hero() {
               </div>
             </form>
           </div>
+          <div className="flex flex-wrap gap-2 mt-20 items-center justify-center ">
+                  <Badge size="sm" href="#" color="info">Cardiología</Badge>
+                  <Badge size="sm" href="#" color="gray">Optometría</Badge>
+                  <Badge size="sm" href="#"color="purple">Hortodoncia</Badge>
+                  <Badge size="sm" href="#" color="failure">Psiquiatría</Badge>
+                  <Badge size="sm" href="#" color="success">Pediatría</Badge>
+                </div>
+                <div className="flex flex-wrap gap-2 mt-10 items-center justify-center ">
+                  <Badge size="sm" href="#" color="success">Radiografía</Badge>
+                  <Badge size="sm" href="#"color="warning">Urología</Badge>
+                  <Badge size="sm" href="#" color="indigo">Ecografía</Badge>
+                  <Badge size="sm" href="#" color="pink">Endoscopia</Badge>
+                </div>
         </div>
       </main>
     </>
