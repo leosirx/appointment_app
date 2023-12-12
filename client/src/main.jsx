@@ -15,6 +15,10 @@ import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import PrivateRoute from './screens/PrivateRoute';
 import ProfileScreen from './screens/ProfileScreen.jsx';
+import FilterScreen from './screens/FilterScreen.jsx';
+import { QueryClient, QueryClientProvider } from 'react-query';
+
+const queryClient = new QueryClient();
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -22,6 +26,7 @@ const router = createBrowserRouter(
       <Route index={true} path='/' element={<HomeScreen />} />
       <Route path='/login' element={<LoginScreen />} />
       <Route path='/register' element={<RegisterScreen />} />
+      <Route path='/filter' element={<FilterScreen />} />
       {/* Private Routes */}
       <Route path='' element={<PrivateRoute />}>
         <Route path='/profile' element={<ProfileScreen />} />
@@ -33,7 +38,9 @@ const router = createBrowserRouter(
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={store}>
     <React.StrictMode>
-      <RouterProvider router={ router } />
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={ router } />
+      </QueryClientProvider>
     </React.StrictMode>
   </Provider>
 )
