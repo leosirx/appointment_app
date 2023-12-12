@@ -12,6 +12,8 @@ import cityRoutes from './routes/cityRoutes.js';
 import specialtyRoutes from './routes/specialtyRoutes.js';
 import customer from './routes/customerRoutes.js'
 import diaryRoutes from './routes/diaryRoutes.js'
+import abailabilityRoutes from './routes/abailabilityRoutes.js'
+import appointmentRoutes from './routes/appointmentRoutes.js';
 
 const port = process.env.PORT || 5000;
 
@@ -34,6 +36,8 @@ app.use('/api/customers', customer);
 app.use('/api/city', cityRoutes);
 app.use('/api/specialty', specialtyRoutes);
 app.use('/api/diary', diaryRoutes);
+app.use('/api/availability', abailabilityRoutes);
+app.use('/api/appointments', appointmentRoutes);
 
 
 if (process.env.MODE_ENV === 'production') {

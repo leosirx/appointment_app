@@ -9,7 +9,6 @@ const specialistSchema = mongoose.Schema(
     },
     lastName: {
       type: String,
-      required: true,
     },
     description: {
       type: String,
@@ -58,6 +57,10 @@ const specialistSchema = mongoose.Schema(
     diaryId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Diary",
+    },
+    abailabilityId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Availability",
     },
   },
   {
