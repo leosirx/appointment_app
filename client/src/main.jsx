@@ -17,6 +17,7 @@ import PrivateRoute from './screens/PrivateRoute';
 import ProfileScreen from './screens/ProfileScreen.jsx';
 import FilterScreen from './screens/FilterScreen.jsx';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import SpecialistScreen from './screens/SpecialistScreen.jsx'
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ const router = createBrowserRouter(
       <Route path='/login' element={<LoginScreen />} />
       <Route path='/register' element={<RegisterScreen />} />
       <Route path='/filter' element={<FilterScreen />} />
+      <Route path='/specialist/*' element={<SpecialistScreen />} />
       {/* Private Routes */}
       <Route path='' element={<PrivateRoute />}>
         <Route path='/profile' element={<ProfileScreen />} />
