@@ -27,20 +27,22 @@ const authUser = asyncHandler(async (req, res) => {
   }
 
   if (specialist && (await specialist.matchPassword(password))) {
-    generateToken(res, specialist._id);
+    const token = generateToken(res, null, specialist._id);
     res.json({
       ...specialist,
-      userName: `${specialist.firstName} ${specialist.lastName}`
+      userName: `${specialist.firstName} ${specialist.lastName}`,
+      token: token
     });
   } else if (customer && (await customer.matchPassword(password))) {
-    generateToken(res, customer._id);
+    const token = generateToken(res, null, null, customer._id);
     res.json({
       ...customer,
-      userName: `${customer.firstName} ${customer.lastName}`
+      userName: `${customer.firstName} ${customer.lastName}`,
+      token: token
     });
   } else if (user && (await user.matchPassword(password))) {
-    generateToken(res, user._id);
-    res.json(user);
+    const token = generateToken(res, user._id);
+    res.json({...user,token: token, userName: `${user.userName}`});
   } else {
     res.status(401).json({ message: 'Invalid email or password' });
   }

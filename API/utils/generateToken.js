@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 
 const generateToken = (res, userId, specialistId, customerId) => {
-  const token = jwt.sign({ userId, specialistId, customerId }, process.env.JWT_SECRET, {
+   const token = jwt.sign({ userId, specialistId, customerId }, process.env.JWT_SECRET, {
     expiresIn: '30d',
   });
 
@@ -11,6 +11,7 @@ const generateToken = (res, userId, specialistId, customerId) => {
     sameSite: 'strict', // Prevent CSRF attacks
     maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
   });
+  return token
 };
 
 export default generateToken;
