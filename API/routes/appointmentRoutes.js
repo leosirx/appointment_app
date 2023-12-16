@@ -3,9 +3,6 @@ import {
   createAppointment,
   getAppointmentsBySpecialist,
   getAppointmentsByCustomer,
-  getAppointmentDetails,
-  updateAppointmentStatus,
-  deleteAppointment,
 } from '../controllers/appointmentController.js';
 import { protect } from '../middleware/authMiddleware.js';
 import rateLimit from 'express-rate-limit';
@@ -20,20 +17,21 @@ const limiter = rateLimit({
   
 router.use(limiter);
 
-router.route('/').post(protect, createAppointment);
+// @desc    Crear una nueva cita
+// @route   POST /api/appointments
+// @access  Private
+router.post('/',protect, createAppointment);
 
-router
-  .route('/specialist/:id')
-  .get(protect, getAppointmentsBySpecialist);
+// @desc    Obtener todas las citas de un especialista
+// @route   GET /api/appointments/specialist/:id
+// @access  Private
+router.get('/specialist/:id', protect, getAppointmentsBySpecialist);
 
-router
-  .route('/customer/:id')
-  .get(protect, getAppointmentsByCustomer);
+// @desc    Obtener todas las citas de un cliente
+// @route   GET /api/appointments/customer/:id
+// @access  Private
+router.get('/customer/:id', protect, getAppointmentsByCustomer);
 
-router
-  .route('/:id')
-  .get(protect, getAppointmentDetails)
-  .put(protect, updateAppointmentStatus)
-  .delete(protect, deleteAppointment);
+// Otros enrutamientos según sea necesario
 
 export default router;
