@@ -1,6 +1,8 @@
 import asyncHandler from 'express-async-handler';
 import User from '../models/userModel.js';
 import generateToken from '../utils/generateToken.js';
+import Specialist from '../models/specialistModel.js';
+import Customer from '../models/customerModel.js'
 
 const getAllUser = asyncHandler(async (req, res) => {
   const results = await User.find();
@@ -13,22 +15,31 @@ const getAllUser = asyncHandler(async (req, res) => {
 const authUser = asyncHandler(async (req, res) => {
   // Get values - destructure
   const { email, password } = req.body;
-  //console.log(userName)
-  const user = await User.findOne({ email });
 
-  if (user && (await user.matchPassword(password))) {
+  let specialist;
+  let customer;
+  let user;
+
+  if (email) {
+    specialist = await Specialist.findOne({ email });
+    customer = await Customer.findOne({ email });
+    user = await User.findOne({ email });
+  }
+
+  if (specialist && (await specialist.matchPassword(password))) {
+    generateToken(res, specialist._id);
+    res.json(specialist);
+  } else if (customer && (await customer.matchPassword(password))) {
+    generateToken(res, customer._id);
+    res.json(customer);
+  } else if (user && (await user.matchPassword(password))) {
     generateToken(res, user._id);
-
-    res.json({
-      _id: user._id,
-      userName: user.userName,
-      email: user.email
-    });
+    res.json(user);
   } else {
-    res.status(401);
-    throw new Error('Invalid email or password');
+    res.status(401).json({ message: 'Invalid email or password' });
   }
 });
+
 
 // @desc    Register a new user
 // @route   POST /api/users
