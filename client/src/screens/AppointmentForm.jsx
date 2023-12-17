@@ -1,13 +1,17 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { useParams } from 'react-router-dom';
+
 
 const AppointmentForm = ({ selectedSlot, selectedDate, onSubmit }) => {
   const [customerName, setCustomerName] = useState('');
   const [comments, setComments] = useState('');
-  
+  const { specialistId } = useParams();
+  const { availabilityId } = useParams();
   const navigate = useNavigate();
- 
+  console.log(availabilityId);
   const date = new Date(selectedDate);
 
   const year = date.getFullYear();
@@ -17,52 +21,50 @@ const AppointmentForm = ({ selectedSlot, selectedDate, onSubmit }) => {
   
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (!selectedSlot) {
       console.error('No se ha seleccionado un horario');
       return;
     }
-
+  
     if (!customerName.trim()) {
       console.error('Ingrese el nombre del cliente');
       return;
     }
-
-    const userAuthenticated = true; // Reemplaza con tu lógica de verificación de autenticación
-
+  
+    // Reemplaza esta lógica de autenticación con tu propia implementación
+    const userAuthenticated = true;
+  
     if (!userAuthenticated) {
-      // Si el usuario no está autenticado, redirigir a la página de inicio de sesión
+      // Si el usuario no está autenticado, redirige a la página de inicio de sesión
       navigate.push('/login');
       return;
     }
-
+  
     const formData = {
-      customerName,
+      customerName, 
       comments,
-      selectedSlot,
+      customerId: '65787dd13e6f9c65bbf204ca',
+      specialistId: specialistId,
+      availabilityId: selectedSlot._id, 
+      startTime: `${selectDate}${selectedSlot.startTime}`,
+      endTime: `${selectDate}${selectedSlot.endTime}`,
     };
-    console.log(selectedSlot);
+  
     try {
-      const apiUrl = 'http://localhost:5000/api/appointments';
-      const queryParams = new URLSearchParams({
-        customerId: '65787dd13e6f9c65bbf204ca', // Replace with actual customer ID
-        specialistId: '65787dc83e6f9c65bbf20464', // Replace with actual specialist ID
-        availabilityId: '6578c8ffbf22ef4104a32c84', // Replace with actual availability ID
-        startTime: `${selectDate}${selectedSlot.startTime}`,
-        endTime: `${selectDate}${selectedSlot.endTime}`,
-        status: 'pending',
-      });
+      const apiUrl = '/api/appointments';
 
-      const urlWithParams = `${apiUrl}?${queryParams.toString()}`;
+      // Realiza una solicitud al servidor para guardar la cita
+      const response = await axios.post(apiUrl, formData);
       
-      // Make a request to the server to save the appointment
-      const response = await axios.post(decodeURIComponent(urlWithParams), formData);
       onSubmit(response.data);
-    } catch (error) {
-      console.error('Error creating appointment:', error);
-      // Manejar errores según sea necesario
+      toast.success('Appointment successfully created');
+      
+    } catch (err) {
+      toast.error(err?.data?.message || err.error);
     }
   };
+  
 
   return (
     <>
@@ -103,12 +105,7 @@ const AppointmentForm = ({ selectedSlot, selectedDate, onSubmit }) => {
           </div>
 
           {/* Botón de envío del formulario */}
-          <button 
-            type="submit"
-            className="rounded-lg mt-4 border text-black px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-cyan-200 focus:outline-none focus:ring-4 focus:ring-cyan-300 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800"
-          >
-            Programar Cita
-          </button>
+          <button type="submit" className=" mt-5 bg-blue-700 text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Schedule</button>
         </form>
       </div>
     </>

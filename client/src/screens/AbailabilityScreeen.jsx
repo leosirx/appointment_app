@@ -21,15 +21,15 @@ const AbailabilityScreen = () => {
       try {
         const response = await axios.get(`/api/availability/specialist/${specialistId}`);
         const availabilities = response.data;
-
         const slots = availabilities.reduce((acc, availability) => {
-          const { specificHours, dayOfWeek } = availability;
+          const { _id, specificHours, dayOfWeek } = availability;
 
           specificHours.forEach((slot) => {
             const startTime = `T${slot.startTime}`;
             const endTime = `T${slot.endTime}`;
 
             acc.push({
+              _id,
               startTime,
               endTime,
               displayTime: `${slot.startTime} - ${slot.endTime}`,
@@ -79,11 +79,11 @@ const AbailabilityScreen = () => {
               inline
             />
             {/* Muestra los horarios disponibles */}
-            <div className='ml-5 p-5 rounded-lg border-gray-400'>
+            <div className='ml-5 p-5 rounded-lg  border-gray-400'>
             {availableSlots.map((slot) => (
               <div key={`${slot.startTime}-${slot.endTime}`} className='mt-3'>
                 <button onClick={() => handleSlotSelect(slot)} 
-                className="rounded-lg border text-black px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-cyan-200 focus:outline-none focus:ring-4 focus:ring-cyan-300 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800"
+                className="rounded-lg border px-5 py-2.5 text-center text-sm font-medium text-black hover:bg-cyan-200 focus:outline-none focus:ring-4 focus:ring-cyan-300 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800"
                 >{slot.displayTime}</button>
               </div>
             ))}
@@ -102,12 +102,5 @@ const AbailabilityScreen = () => {
   );
 };
 
-const CustomDatePickerInput = ({ value, onClick }) => (
-  <button 
-      className="rounded-lg border text-cyan-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-cyan-200 focus:outline-none focus:ring-4 focus:ring-cyan-300 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800"
-      onClick={onClick}>
-      {value || 'Select a date'}
-  </button>
-);
 
 export default AbailabilityScreen;

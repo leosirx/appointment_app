@@ -34,6 +34,10 @@ const appointmentSchema = mongoose.Schema(
       type: String,
       required: false,
     },
+    customerName: {
+      type: String,
+      required: false,
+    },
   },
   {
     timestamps: true,

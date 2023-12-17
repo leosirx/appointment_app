@@ -20,7 +20,9 @@ router.use(limiter);
 // @desc    Crear una nueva cita
 // @route   POST /api/appointments
 // @access  Private
-router.post('/',protect, createAppointment);
+router
+  .route('/')
+  .post(createAppointment);
 
 // @desc    Obtener todas las citas de un especialista
 // @route   GET /api/appointments/specialist/:id
