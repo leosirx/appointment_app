@@ -1,17 +1,31 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { useParams } from 'react-router-dom';
 
 
-const AppointmentForm = ({ selectedSlot, selectedDate, onSubmit }) => {
+const AppointmentForm = ({ selectedSlot, selectedDate, availability, onSubmit }) => {
+  const { userInfo } = useSelector((state) => state.auth);
   const [customerName, setCustomerName] = useState('');
   const [comments, setComments] = useState('');
   const { specialistId } = useParams();
-  const { availabilityId } = useParams();
   const navigate = useNavigate();
-  console.log(availabilityId);
+  const [initialFormValues, setInitialFormValues] = useState({
+    customerName: '',
+    comments: '',
+  });
+
+  useEffect(() => {
+    // Check if form data is passed from the state
+    if (navigate?.location?.state?.formData) {
+        const { customerName, comments } = navigate.location.state.formData;
+        // Set the initial form values
+        setInitialFormValues({ customerName, comments });
+    }
+  }, [navigate]);
+  
+  
   const date = new Date(selectedDate);
 
   const year = date.getFullYear();
@@ -23,24 +37,15 @@ const AppointmentForm = ({ selectedSlot, selectedDate, onSubmit }) => {
     e.preventDefault();
   
     if (!selectedSlot) {
-      console.error('No se ha seleccionado un horario');
+      toast.warning('Register an hour');
       return;
     }
   
     if (!customerName.trim()) {
-      console.error('Ingrese el nombre del cliente');
+      toast.warning('Register a name');
       return;
     }
-  
-    // Reemplaza esta lógica de autenticación con tu propia implementación
-    const userAuthenticated = true;
-  
-    if (!userAuthenticated) {
-      // Si el usuario no está autenticado, redirige a la página de inicio de sesión
-      navigate.push('/login');
-      return;
-    }
-  
+
     const formData = {
       customerName, 
       comments,
@@ -50,7 +55,13 @@ const AppointmentForm = ({ selectedSlot, selectedDate, onSubmit }) => {
       startTime: `${selectDate}${selectedSlot.startTime}`,
       endTime: `${selectDate}${selectedSlot.endTime}`,
     };
-  
+
+    if (!userInfo) {
+      // Si el usuario no está autenticado
+      navigate('/login', { state: { from: 'abailability', formData } });
+      return;
+    }
+
     try {
       const apiUrl = '/api/appointments';
 
@@ -87,6 +98,7 @@ const AppointmentForm = ({ selectedSlot, selectedDate, onSubmit }) => {
               value={customerName}
               onChange={(e) => setCustomerName(e.target.value)}
               required
+              defaultValue={initialFormValues.customerName}
               className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
             />
           </div>

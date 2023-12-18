@@ -23,7 +23,7 @@ const ProfileScreen = () => {
     setName(userInfo.userName);
     setEmail(userInfo.email);
   }, [userInfo.email, userInfo.userName]);
-  console.log(userInfo);
+  
   const submitHandler = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {

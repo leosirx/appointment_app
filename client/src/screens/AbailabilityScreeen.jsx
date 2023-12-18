@@ -9,7 +9,6 @@ import AppointmentForm from './AppointmentForm';
 import FormContainer from '../components/FormContainer';
 
 const AbailabilityScreen = () => {
-  const { userInfo } = useSelector((state) => state.auth);
   const [availableSlots, setAvailableSlots] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [formVisible, setFormVisible] = useState(false);  // Nuevo estado para controlar la visibilidad del formulario
@@ -92,7 +91,11 @@ const AbailabilityScreen = () => {
             {/* Muestra el formulario solo si un horario está seleccionado */}
             {formVisible && (
               <div className='rounded-sm border-sky-400'>
-                <AppointmentForm selectedSlot={selectedSlot} selectedDate={selectedDate} onSubmit={handleFormSubmit} />
+                <AppointmentForm 
+                  selectedSlot={selectedSlot} 
+                  selectedDate={selectedDate} 
+                  onSubmit={handleFormSubmit} 
+                />
               </div>
             )}
         </div>
