@@ -19,7 +19,6 @@ const LoginScreen = () => {
     const { userInfo } = useSelector((state) => state.auth);
     
     useEffect(() => {
-        
         if (userInfo) {
           // If userInfo is available, check for the location state
           if (location.state) {
