@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -11,19 +11,7 @@ const AppointmentForm = ({ selectedSlot, selectedDate, availability, onSubmit })
   const [comments, setComments] = useState('');
   const { specialistId } = useParams();
   const navigate = useNavigate();
-  const [initialFormValues, setInitialFormValues] = useState({
-    customerName: '',
-    comments: '',
-  });
-
-  useEffect(() => {
-    // Check if form data is passed from the state
-    if (navigate?.location?.state?.formData) {
-        const { customerName, comments } = navigate.location.state.formData;
-        // Set the initial form values
-        setInitialFormValues({ customerName, comments });
-    }
-  }, [navigate]);
+  
   
   
   const date = new Date(selectedDate);
@@ -49,7 +37,7 @@ const AppointmentForm = ({ selectedSlot, selectedDate, availability, onSubmit })
     const formData = {
       customerName, 
       comments,
-      customerId: '65787dd13e6f9c65bbf204ca',
+      customerId: '6578c8ffbf22ef4104a32c84',
       specialistId: specialistId,
       availabilityId: selectedSlot._id, 
       startTime: `${selectDate}${selectedSlot.startTime}`,
@@ -98,7 +86,6 @@ const AppointmentForm = ({ selectedSlot, selectedDate, availability, onSubmit })
               value={customerName}
               onChange={(e) => setCustomerName(e.target.value)}
               required
-              defaultValue={initialFormValues.customerName}
               className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
             />
           </div>

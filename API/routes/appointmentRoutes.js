@@ -27,7 +27,7 @@ router
 // @desc    Obtener todas las citas de un especialista
 // @route   GET /api/appointments/specialist/:id
 // @access  Private
-router.get('/specialist/:id', protect, getAppointmentsBySpecialist);
+router.get('/specialist/:id', getAppointmentsBySpecialist);
 
 // @desc    Obtener todas las citas de un cliente
 // @route   GET /api/appointments/customer/:id

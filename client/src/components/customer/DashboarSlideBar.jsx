@@ -17,7 +17,7 @@ export default function DashboarSlideBar() {
             Appointments
           </Sidebar.Item>
           <Sidebar.Item href="abailability" icon={HiInbox}>
-            Abailability
+            Schedule
           </Sidebar.Item>
           <Sidebar.Item href="profile" icon={HiUser}>
             Profile

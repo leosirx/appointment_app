@@ -14,7 +14,7 @@ const AbailabilityScreen = () => {
   const [formVisible, setFormVisible] = useState(false);  // Nuevo estado para controlar la visibilidad del formulario
   const [selectedSlot, setSelectedSlot] = useState(null);  // Nuevo estado para almacenar el horario seleccionado
   const { specialistId } = useParams();
- 
+  
   useEffect(() => {
     const fetchAvailability = async () => {
       try {

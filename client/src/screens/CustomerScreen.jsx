@@ -1,12 +1,12 @@
 import {  Routes, Route, Outlet } from "react-router-dom";
-import DashboardSlideBar from "../components/specialist/DashboarSlideBar";
+import DashboardSlideBar from "../components/customer/DashboarSlideBar";
 
-import Abailability from "../components/specialist/views/Abailability";
-import Appointments from "../components/specialist/views/Appointments";
-import Profile from "../components/specialist/views/profile/Profile";
+import Schedules from "../components/customer/views/Schedule";
+import Appointments from "../components/customer/views/Appointments";
+import Profile from "../components/customer/views/profile/Profile";
 import FormContainer from '../components/FormContainer';
 
-export default function SpecialistScreen() {
+export default function CustomerScreen() {
   return (
     <>
         <FormContainer>
@@ -16,7 +16,7 @@ export default function SpecialistScreen() {
             </div>
             <div className="ml-10 mt-20" >
             <Routes>
-              <Route path="/abailability" element={<Abailability />} />
+              <Route path="/schedules" element={<Schedules />} />
               <Route path="/appointments" element={<Appointments />} />
               <Route path="/profile" element={<Profile />} />
             </Routes>
