@@ -56,6 +56,10 @@ const AppointmentForm = ({ selectedSlot, selectedDate, availability, onSubmit })
       // Realiza una solicitud al servidor para guardar la cita
       const response = await axios.post(apiUrl, formData);
       
+      // Clean inputs after submit form
+      setCustomerName('');
+      setComments('');
+
       onSubmit(response.data);
       toast.success('Appointment successfully created');
       

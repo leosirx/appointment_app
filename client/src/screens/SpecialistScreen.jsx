@@ -3,7 +3,7 @@ import DashboardSlideBar from "../components/specialist/DashboarSlideBar";
 
 import Abailability from "../components/specialist/views/Abailability";
 import Appointments from "../components/specialist/views/Appointments";
-import Profile from "../components/specialist/views/profile/Profile";
+import Profile from "../screens/ProfileScreen";
 import FormContainer from '../components/FormContainer';
 
 export default function SpecialistScreen() {

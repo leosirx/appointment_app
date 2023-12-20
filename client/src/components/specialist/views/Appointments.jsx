@@ -6,18 +6,24 @@ import { toast }  from  'react-toastify'
 import { useParams } from 'react-router-dom';
 import { Table } from 'flowbite-react';
 import { useQuery } from 'react-query';
+import { useSelector } from 'react-redux';
 
-const fetchAvailability = async () => {
-  const response = await axios.get('/api/appointments/specialist/65787dc83e6f9c65bbf20464').catch(() => {
-    throw new Error('Error fetching specialists');
-  });
-  return response.data;
-};
+
 
 export default function Appointments() {
+  const { userInfo } = useSelector((state) => state.auth);
+  
+  const fetchAvailability = async () => {
+    const response = await axios.get('/api/appointments/specialist/65787dc83e6f9c65bbf20464').catch(() => {
+      throw new Error('Error fetching specialists');
+    });
+    console.log(response.data);
+    return response.data;
+  };
+  
   const { data, status } = useQuery("appointments", fetchAvailability);
-
-  console.log(data);
+  
+  
 
   return (
     <div className="overflow-x-auto">

@@ -22,9 +22,6 @@ export default function DashboarSlideBar() {
           <Sidebar.Item href="profile" icon={HiUser}>
             Profile
           </Sidebar.Item>
-          <Sidebar.Item href="/logout" icon={HiTable}>
-            LogOut
-          </Sidebar.Item>
         </Sidebar.ItemGroup>
         
       </Sidebar.Items>

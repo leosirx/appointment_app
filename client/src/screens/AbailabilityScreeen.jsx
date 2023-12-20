@@ -79,15 +79,23 @@ const AbailabilityScreen = () => {
             />
             {/* Muestra los horarios disponibles */}
             <div className='ml-5 p-5 rounded-lg  border-gray-400'>
-            {availableSlots.map((slot) => (
-              <div key={`${slot.startTime}-${slot.endTime}`} className='mt-3'>
-                <button onClick={() => handleSlotSelect(slot)} 
-                className="rounded-lg border px-5 py-2.5 text-center text-sm font-medium text-black hover:bg-cyan-200 focus:outline-none focus:ring-4 focus:ring-cyan-300 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800"
-                >{slot.displayTime}</button>
-              </div>
-            ))}
+            {availableSlots.length === 0 ? (
+                <p className="rounded-lg border px-5 py-2.5 text-center text-sm font-medium text-black hover:bg-cyan-200 focus:outline-none focus:ring-4 focus:ring-cyan-300 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800"
+                > Not abailability
+                </p>
+              ) : (
+                availableSlots.map((slot) => (
+                  <div key={`${slot.startTime}-${slot.endTime}`} className='mt-3'>
+                    <button 
+                      onClick={() => handleSlotSelect(slot)} 
+                      className="rounded-lg border px-5 py-2.5 text-center text-sm font-medium text-black hover:bg-cyan-200 focus:outline-none focus:ring-4 focus:ring-cyan-300 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800"
+                    > 
+                      {slot.displayTime}
+                    </button>
+                  </div>
+                ))
+            )}
             </div>
-
             {/* Muestra el formulario solo si un horario está seleccionado */}
             {formVisible && (
               <div className='rounded-sm border-sky-400'>

@@ -1,7 +1,7 @@
 import {  Routes, Route, Outlet } from "react-router-dom";
 import DashboardSlideBar from "../components/customer/DashboarSlideBar";
 
-import Schedules from "../components/customer/views/Schedule";
+import Schedules from "../screens/FilterScreen";
 import Appointments from "../components/customer/views/Appointments";
 import Profile from "../components/customer/views/profile/Profile";
 import FormContainer from '../components/FormContainer';
@@ -16,7 +16,7 @@ export default function CustomerScreen() {
             </div>
             <div className="ml-10 mt-20" >
             <Routes>
-              <Route path="/schedules" element={<Schedules />} />
+              <Route path="/filter" element={<Schedules />} />
               <Route path="/appointments" element={<Appointments />} />
               <Route path="/profile" element={<Profile />} />
             </Routes>
