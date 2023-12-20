@@ -1,10 +1,7 @@
 import express from 'express';
 import {
-<<<<<<< HEAD
   getAllSpecialist,
   getOneSpecialist,
-=======
->>>>>>> f2a7cc6108f40b4a9922291bc240d7b718e4ae09
   authSpecialist,
   registerSpecialist,
   logoutSpecialist,
@@ -14,7 +11,6 @@ import {
 } from '../controllers/specialistController.js';
 import { protect } from '../middleware/authMiddleware.js';
 import rateLimit from 'express-rate-limit';
-<<<<<<< HEAD
 import Specialist from '../models/specialistModel.js';
 
 const router = express.Router();
@@ -36,11 +32,6 @@ router.get('/', async (req, res) => {
   }
 });
 
-=======
-
-const router = express.Router();
-
->>>>>>> f2a7cc6108f40b4a9922291bc240d7b718e4ae09
 // Apply rate limiting to all routes
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
@@ -49,15 +40,11 @@ const limiter = rateLimit({
 
 router.use(limiter);
 
-<<<<<<< HEAD
 router
   .route('/')
   .get(getAllSpecialist)
   .post(registerSpecialist)
 
-=======
-router.post('/', registerSpecialist);
->>>>>>> f2a7cc6108f40b4a9922291bc240d7b718e4ae09
 router.post('/auth', authSpecialist);
 router.post('/logout', logoutSpecialist);
 router
@@ -66,11 +53,8 @@ router
   .put(protect, updateSpecialistProfile)
   .delete(protect, removeSpecialist)
 
-<<<<<<< HEAD
 router
   .route('/id')
   .get(protect, getOneSpecialist)
 
-=======
->>>>>>> f2a7cc6108f40b4a9922291bc240d7b718e4ae09
 export default router;
