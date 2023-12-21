@@ -1,6 +1,8 @@
 import asyncHandler from 'express-async-handler';
 import User from '../models/userModel.js';
 import generateToken from '../utils/generateToken.js';
+import Specialist from '../models/specialistModel.js';
+import Customer from '../models/customerModel.js'
 
 const getAllUser = asyncHandler(async (req, res) => {
   const results = await User.find();
@@ -13,22 +15,39 @@ const getAllUser = asyncHandler(async (req, res) => {
 const authUser = asyncHandler(async (req, res) => {
   // Get values - destructure
   const { email, password } = req.body;
-  //console.log(userName)
-  const user = await User.findOne({ email });
 
-  if (user && (await user.matchPassword(password))) {
-    generateToken(res, user._id);
+  let specialist;
+  let customer;
+  let user;
 
+  if (email) {
+    specialist = await Specialist.findOne({ email });
+    customer = await Customer.findOne({ email });
+    user = await User.findOne({ email });
+  }
+
+  if (specialist && (await specialist.matchPassword(password))) {
+    const token = generateToken(res, null, specialist._id);
     res.json({
-      _id: user._id,
-      userName: user.userName,
-      email: user.email
+      ...specialist,
+      userName: `${specialist.firstName} ${specialist.lastName}`,
+      token: token
     });
+  } else if (customer && (await customer.matchPassword(password))) {
+    const token = generateToken(res, null, null, customer._id);
+    res.json({
+      ...customer,
+      userName: `${customer.firstName} ${customer.lastName}`,
+      token: token
+    });
+  } else if (user && (await user.matchPassword(password))) {
+    const token = generateToken(res, user._id);
+    res.json({...user,token: token, userName: `${user.userName}`});
   } else {
-    res.status(401);
-    throw new Error('Invalid email or password');
+    res.status(401).json({ message: 'Invalid email or password' });
   }
 });
+
 
 // @desc    Register a new user
 // @route   POST /api/users
