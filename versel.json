@@ -1,4 +1,11 @@
 {
+    "version": 2,
+    "builds": [
+        {
+        "src": "/API/server.js",
+        "use": "@vercel/node"
+        }
+    ],
     "buildCommand": "cd client && npm install && npm run build",
     "outputDirectory": "client/dist",
     "framework": "vite",
