@@ -28,7 +28,7 @@ const createAppointment = asyncHandler(async (req, res) => {
 // @access  Private
 const getAppointmentsBySpecialist = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const appointments = await Appointment.find({ specialistId: id });
+  const appointments = await Appointment.find({ specialistId: id }).populate('specialistId').populate('customerId');
 
   if (appointments) {
     res.json(appointments);
@@ -43,7 +43,7 @@ const getAppointmentsBySpecialist = asyncHandler(async (req, res) => {
 // @access  Private
 const getAppointmentsByCustomer = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const appointments = await Appointment.find({ customerId: id });
+  const appointments = await Appointment.find({ customerId: id }).populate('customerId').populate('specialistId');
 
   if (appointments) {
     res.json(appointments);

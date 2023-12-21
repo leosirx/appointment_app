@@ -16,7 +16,11 @@ import RegisterScreen from './screens/RegisterScreen';
 import PrivateRoute from './screens/PrivateRoute';
 import ProfileScreen from './screens/ProfileScreen.jsx';
 import FilterScreen from './screens/FilterScreen.jsx';
+import AbailabilityScreen from './screens/AbailabilityScreeen.jsx';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import SpecialistScreen from './screens/SpecialistScreen.jsx';
+import CustomerScreen from './screens/CustomerScreen.jsx';
+
 
 const queryClient = new QueryClient();
 
@@ -27,6 +31,9 @@ const router = createBrowserRouter(
       <Route path='/login' element={<LoginScreen />} />
       <Route path='/register' element={<RegisterScreen />} />
       <Route path='/filter' element={<FilterScreen />} />
+      <Route path="/abailability/:specialistId" element={<AbailabilityScreen />} />
+      <Route path='/specialist/*' element={<SpecialistScreen />} />
+      <Route path='/customer/*' element={<CustomerScreen />} />
       {/* Private Routes */}
       <Route path='' element={<PrivateRoute />}>
         <Route path='/profile' element={<ProfileScreen />} />

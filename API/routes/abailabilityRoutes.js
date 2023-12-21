@@ -26,7 +26,7 @@ router.post('/', protect, createAvailability);
 // @desc    Obtener todas las disponibilidades de un especialista
 // @route   GET /api/availability/specialist/:id
 // @access  Private
-router.get('/specialist/:id', protect, getAvailabilitiesBySpecialist);
+router.get('/specialist/:id', getAvailabilitiesBySpecialist);
 
 // @desc    Eliminar una disponibilidad
 // @route   DELETE /api/availability/:id

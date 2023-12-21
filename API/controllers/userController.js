@@ -1,3 +1,4 @@
+
 import asyncHandler from "express-async-handler";
 import User from "../models/userModel.js";
 import generateToken from "../utils/generateToken.js";
@@ -20,8 +21,10 @@ const authUser = asyncHandler(async (req, res) => {
   let user;
 
   if (email) {
+
     specialist = await Specialist.findOne({ email }).populate('specialtyId').populate('cityId');
     customer = await Customer.findOne({ email }).populate('specialtyId').populate('cityId');;
+
     user = await User.findOne({ email });
   }
 
@@ -30,6 +33,7 @@ const authUser = asyncHandler(async (req, res) => {
     res.json({
       ...specialist,
       userName: `${specialist.firstName} ${specialist.lastName}`,
+
       token: token,
     });
   } else if (customer && (await customer.matchPassword(password))) {
@@ -44,8 +48,10 @@ const authUser = asyncHandler(async (req, res) => {
     res.json({ ...user, token: token, userName: `${user.userName}` });
   } else {
     res.status(401).json({ message: "Invalid email or password" });
+
   }
 });
+
 
 // @desc    Register a new user
 // @route   POST /api/users

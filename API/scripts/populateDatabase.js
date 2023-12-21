@@ -6,7 +6,7 @@ import Specialty from '../models/specialtyModel.js';
 import Customer from '../models/customerModel.js';
 
 // Conexión a la base de datos
-mongoose.connect('mongodb+srv://admin-edu:yvVS8ZXvjN_3PY3@cluster0.sfl5hql.mongodb.net/appointmentDB', {
+mongoose.connect('mongodb+srv://shamelartca:QUMfyJO5d8y1HKP6@cluster0.dgtcq5u.mongodb.net/', {
   useNewUrlParser: true,
 });
 
