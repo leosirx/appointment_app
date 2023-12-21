@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import FormContainer from '../components/FormContainer';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLoginMutation } from '../slices/userApiSlice';
@@ -10,16 +10,17 @@ import { Spinner } from 'flowbite-react';
 const LoginScreen = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const location = useLocation(); // to get the location state
 
     const [login, { isLoading }] = useLoginMutation();
 
     const { userInfo } = useSelector((state) => state.auth);
-
+    
     useEffect(() => {
         if (userInfo) {
+
             if (userInfo._doc.role === "specialist") {
                 navigate(`/specialist/availability`)
             }else {
@@ -29,16 +30,27 @@ const LoginScreen = () => {
     }, [navigate, userInfo]);
     console.log(userInfo)
 
+
     const submitHandler = async (e) => {
         e.preventDefault();
         try {
-            const res = await login({ email, password }).unwrap();
-            dispatch(setCredentials({ ...res }));
+          const res = await login({ email, password }).unwrap();
+          dispatch(setCredentials({ ...res }));
+    
+          // Check if there is a state in the location and it's coming from the appointment screen
+          if (location.state && location.state.from === 'appointment') {
+            // Redirect back to the appointment screen with stored form data
+            navigate('/appointment', { state: location.state.formData });
+            
+            } else {
+            // If not coming from the appointment screen, redirect to the default location
             navigate('/');
+           
+          }
         } catch (err) {
-            toast.error(err?.data?.message || err.error);
+          toast.error(err?.data?.message || err.error);
         }
-    };
+      };
 
     return (
         <>
@@ -104,5 +116,3 @@ const LoginScreen = () => {
 }
 
 export default LoginScreen
-
-

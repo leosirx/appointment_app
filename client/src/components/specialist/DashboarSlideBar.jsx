@@ -1,8 +1,13 @@
 import "flowbite";
 import { Link } from "react-router-dom";
+import { Sidebar } from 'flowbite-react';
+import { BiBuoy } from 'react-icons/bi';
+import { HiArrowSmRight, HiChartPie, HiInbox, HiShoppingBag, HiTable, HiUser, HiViewBoards } from 'react-icons/hi';
+
 
 export default function DashboarSlideBar() {
   return (
+
     <div className="absolute mt-7 left-0 z-40 w-64 rounded-lg">
       <aside
         id="separator-sidebar"
@@ -84,5 +89,6 @@ export default function DashboarSlideBar() {
         </div>
       </aside>
     </div>
+
   );
 }

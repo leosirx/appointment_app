@@ -176,11 +176,9 @@ const updateSpecialistProfile = asyncHandler(async (req, res) => {
     specialist.phone = req.body.phone || specialist.phone;
     specialist.birthday = req.body.birthday || specialist.birthday;
     specialist.age = req.body.age || specialist.age;
+    specialist.password = req.body.password || specialist.password;
 
-    if (req.body.password) {
-      specialist.password = req.body.password;
-    }
-
+    
     const updatedSpecialist = await specialist.save();
 
     if (req.body.cityId) {

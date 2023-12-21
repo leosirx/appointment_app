@@ -37,15 +37,21 @@ function Header() {
                 <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
                     {userInfo ? (
                         <>  
-                            <Dropdown label={userInfo.userName} dismissOnClick={false} color="primary">
+                            <Dropdown label={`${userInfo.firstName} ${userInfo.lastName}`} dismissOnClick={false} color="primary">
                                 <Dropdown.Header>
                                     <img className="ml-3 w-8 h-8 rounded-full" src="/user.png" alt="user photo" />
                                 </Dropdown.Header>
                                 <Dropdown.Item>
-                                    <a href="/" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+                                    <a href="http://localhost:3000/schedule/" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
                                 </Dropdown.Item>    
                                 <Dropdown.Item>
                                     <a href="/profile" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Profile</a>
+                                </Dropdown.Item>
+                                <Dropdown.Item>
+                                    <a href="/specialist/" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Specialist</a>
+                                </Dropdown.Item>
+                                <Dropdown.Item>
+                                    <a href="/customer/" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Customer</a>
                                 </Dropdown.Item>
                                 <Dropdown.Item>
                                 <div className="py-2">
