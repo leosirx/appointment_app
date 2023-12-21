@@ -26,7 +26,7 @@ const createAvailability = asyncHandler(async (req, res) => {
 // @access  Private
 const getAvailabilitiesBySpecialist = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const availabilities = await Availability.find({ specialistId: id });
+  const availabilities = await Availability.find({ specialistId: id }).populate('specialistId');
 
   if (availabilities) {
     res.json(availabilities);
