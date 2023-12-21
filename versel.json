@@ -2,17 +2,33 @@
     "version": 2,
     "builds": [
         {
-        "src": "/API/server.js",
+        "src": "API/server.js",
         "use": "@vercel/node"
+        },
+        {
+        "src": "client/package.json",
+        "use": "@vercel/static-build",
+        "config": {
+            "distDir": "build"
+        }
         }
     ],
-    "buildCommand": "cd client && npm install && npm run build",
-    "outputDirectory": "client/dist",
-    "framework": "vite",
-    "rewrites": [
-      {
-        "source": "/API(.*)",
-        "destination": "/API/server.js"
-      }
+    "routes": [
+        {
+        "src": "/API/(.*)",
+        "dest": "/API/server.js"
+        },
+        {
+        "src": "^/static/(.*)",
+        "dest": "/client/static/$1"
+        },
+        {
+            "src": "/(.*)\\.png",
+            "dest": "/client/$1.png"
+        },
+        {
+        "src": "/(.*)",
+        "dest": "/client/index.html"
+        }
     ]
 }
