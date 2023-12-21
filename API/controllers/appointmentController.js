@@ -43,7 +43,7 @@ const getAppointmentsBySpecialist = asyncHandler(async (req, res) => {
 // @access  Private
 const getAppointmentsByCustomer = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const appointments = await Appointment.find({ customerId: id });
+  const appointments = await Appointment.find({ customerId: id }).populate("availabilityId").populate("specialistId").populate({ path: "specialistId", populate: ["specialtyId", "cityId"] });
 
   if (appointments) {
     res.json(appointments);
@@ -92,10 +92,11 @@ const updateAppointmentStatus = asyncHandler(async (req, res) => {
 // @access  Private
 const deleteAppointment = asyncHandler(async (req, res) => {
   const { id } = req.params;
+  console.log("entre!", id)
   const appointment = await Appointment.findById(id);
 
   if (appointment) {
-    await appointment.remove();
+    await appointment.deleteOne();
     res.json({ message: 'Appointment removed' });
   } else {
     res.status(404);
