@@ -40,16 +40,47 @@ const getAvailabilitiesBySpecialist = asyncHandler(async (req, res) => {
 // @route   DELETE /api/availability/:id
 // @access  Private
 const deleteAvailability = asyncHandler(async (req, res) => {
-  const { id } = req.params;
-  const availability = await Availability.findById(id);
+  const availabilityId = req.params.id; 
 
-  if (availability) {
-    await availability.remove();
-    res.json({ message: 'Availability removed' });
+  // Verifica si la disponibilidad existe antes de intentar eliminar
+  const existingAvailability = await Availability.findById(availabilityId);
+
+  if (existingAvailability) {
+    // Elimina la disponibilidad
+    await Availability.findByIdAndDelete(availabilityId);
+
+    res.status(200).json({ message: 'Availability deleted successfully' });
   } else {
     res.status(404);
     throw new Error('Availability not found');
   }
 });
 
-export { createAvailability, getAvailabilitiesBySpecialist, deleteAvailability };
+
+// @desc Actualiza la disponibilidad del especialista
+// @route PUT /api/availability/:id
+// @access Private
+const updateAvailability = asyncHandler(async (req, res) => {
+  const { specialistId, dayOfWeek, specificHours } = req.body;
+  const availabilityId = req.params.id; // Suponiendo que el ID de la disponibilidad se pasa como un parámetro en la URL
+
+  // Verifica si la disponibilidad existe antes de intentar actualizar
+  const existingAvailability = await Availability.findById(availabilityId);
+
+  if (existingAvailability) {
+    // Actualiza los campos necesarios
+    existingAvailability.specialistId = specialistId;
+    existingAvailability.dayOfWeek = dayOfWeek;
+    existingAvailability.specificHours = specificHours;
+
+    // Guarda los cambios
+    const updatedAvailability = await existingAvailability.save();
+
+    res.status(200).json(updatedAvailability);
+  } else {
+    res.status(404);
+    throw new Error('Availability not found');
+  }
+});
+
+export { createAvailability, getAvailabilitiesBySpecialist, deleteAvailability, updateAvailability };

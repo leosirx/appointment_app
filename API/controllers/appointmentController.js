@@ -28,7 +28,7 @@ const createAppointment = asyncHandler(async (req, res) => {
 // @access  Private
 const getAppointmentsBySpecialist = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const appointments = await Appointment.find({ specialistId: id });
+  const appointments = await Appointment.find({ specialistId: id }).populate("specialistId").populate("customerId").populate("availabilityId") 
 
   if (appointments) {
     res.json(appointments);
@@ -95,7 +95,7 @@ const deleteAppointment = asyncHandler(async (req, res) => {
   const appointment = await Appointment.findById(id);
 
   if (appointment) {
-    await appointment.remove();
+    await appointment.deleteOne();
     res.json({ message: 'Appointment removed' });
   } else {
     res.status(404);
