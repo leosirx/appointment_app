@@ -28,7 +28,9 @@ const createAppointment = asyncHandler(async (req, res) => {
 // @access  Private
 const getAppointmentsBySpecialist = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const appointments = await Appointment.find({ specialistId: id }).populate('specialistId').populate('customerId');
+
+  const appointments = await Appointment.find({ specialistId: id }).populate("specialistId").populate("customerId").populate("availabilityId") 
+
 
   if (appointments) {
     res.json(appointments);
