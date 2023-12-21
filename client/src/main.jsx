@@ -16,7 +16,9 @@ import RegisterScreen from './screens/RegisterScreen';
 import PrivateRoute from './screens/PrivateRoute';
 import ProfileScreen from './screens/ProfileScreen.jsx';
 import FilterScreen from './screens/FilterScreen.jsx';
-import AbailabilityScreen from './screens/AbailabilityScreeen.jsx';
+
+import ScheduleScreen from './screens/ScheduleScreen.jsx';
+
 import { QueryClient, QueryClientProvider } from 'react-query';
 import SpecialistScreen from './screens/SpecialistScreen.jsx';
 import CustomerScreen from './screens/CustomerScreen.jsx';
@@ -37,6 +39,7 @@ const router = createBrowserRouter(
       {/* Private Routes */}
       <Route path='' element={<PrivateRoute />}>
         <Route path='/profile' element={<ProfileScreen />} />
+        <Route path='/schedule' element={<ScheduleScreen />} />
       </Route>
     </Route>
   )
