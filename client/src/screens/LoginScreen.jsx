@@ -20,9 +20,14 @@ const LoginScreen = () => {
 
     useEffect(() => {
         if (userInfo) {
+            if (userInfo._doc.role === "specialist") {
+                navigate(`/specialist/availability`)
+            }else {
             navigate('/');
+            }
         }
     }, [navigate, userInfo]);
+    console.log(userInfo)
 
     const submitHandler = async (e) => {
         e.preventDefault();
