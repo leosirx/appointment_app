@@ -23,7 +23,7 @@ const authUser = asyncHandler(async (req, res) => {
   if (email) {
 
     specialist = await Specialist.findOne({ email }).populate('specialtyId').populate('cityId');
-    customer = await Customer.findOne({ email }).populate('specialtyId').populate('cityId');;
+    customer = await Customer.findOne({ email }).populate('cityId');
 
     user = await User.findOne({ email });
   }

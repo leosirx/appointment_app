@@ -16,6 +16,7 @@ import RegisterScreen from './screens/RegisterScreen';
 import PrivateRoute from './screens/PrivateRoute';
 import ProfileScreen from './screens/ProfileScreen.jsx';
 import FilterScreen from './screens/FilterScreen.jsx';
+import AbailabilityScreen from './screens/AbailabilityScreeen.jsx';
 
 import ScheduleScreen from './screens/ScheduleScreen.jsx';
 
