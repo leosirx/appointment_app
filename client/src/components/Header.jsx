@@ -48,6 +48,12 @@ function Header() {
                                     <a href="/profile" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Profile</a>
                                 </Dropdown.Item>
                                 <Dropdown.Item>
+                                    <a href="/specialist/" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Specialist</a>
+                                </Dropdown.Item>
+                                <Dropdown.Item>
+                                    <a href="/customer/" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Customer</a>
+                                </Dropdown.Item>
+                                <Dropdown.Item>
                                 <div className="py-2">
                                     <a href="/" onClick={logoutHandler} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
                                 </div>

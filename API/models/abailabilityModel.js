@@ -10,7 +10,6 @@ const availabilitySchema = mongoose.Schema(
     dayOfWeek: {
       type: Number,
       required: true,
-      // Puedes usar 0 para Domingo, 1 para Lunes, y así sucesivamente.
       min: 0,
       max: 6,
     },

@@ -10,16 +10,19 @@ import customerRoutes from './routes/customerRoutes.js'
 import specialistRoutes from './routes/specialistRoutes.js';
 import cityRoutes from './routes/cityRoutes.js';
 import specialtyRoutes from './routes/specialtyRoutes.js';
-import customer from './routes/customerRoutes.js'
-import diaryRoutes from './routes/diaryRoutes.js'
-import abailabilityRoutes from './routes/abailabilityRoutes.js'
+import customer from './routes/customerRoutes.js';
+import diaryRoutes from './routes/diaryRoutes.js';
+import abailabilityRoutes from './routes/abailabilityRoutes.js';
 import appointmentRoutes from './routes/appointmentRoutes.js';
+import cors from 'cors';
 
 const port = process.env.PORT || 5000;
 
 connectDB();
 
 const app = express();
+
+app.use(cors())
 
 // Allows to parser Json
 app.use(express.json());
