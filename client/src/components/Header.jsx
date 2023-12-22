@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useLogoutMutation } from '../slices/userApiSlice';
 import { logout } from '../slices/authSlice';
-import { Dropdown } from 'flowbite-react';
+import { Dropdown } from 'flowbite-react'; 
 
 
 function Header() {

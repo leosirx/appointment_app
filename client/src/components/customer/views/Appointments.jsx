@@ -6,7 +6,7 @@ import { toast }  from  'react-toastify'
 import { useParams } from 'react-router-dom';
 import { Table } from 'flowbite-react';
 import { useQuery } from 'react-query';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux'; 
 
 
 const fetchAvailability = async () => {
