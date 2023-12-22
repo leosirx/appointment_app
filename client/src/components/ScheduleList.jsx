@@ -45,7 +45,7 @@ const ScheduleList = ({refetch, scheduleData}) => {
                                 <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
                                     {schedule.specialistId.specialtyId.name}
                                 </Table.Cell>
-                                <Table.Cell>{weekDays[schedule.availabilityId.dayOfWeek]}</Table.Cell>
+                                <Table.Cell>{weekDays[schedule.availabilityId?.dayOfWeek]}</Table.Cell>
                                 <Table.Cell>{`${schedule.specialistId.firstName} ${schedule.specialistId.lastName}`}</Table.Cell>
                                 <Table.Cell>{schedule.specialistId.cityId.name}</Table.Cell>
                                 <Table.Cell>
