@@ -8,7 +8,7 @@ export default defineConfig({
     port: 3000,
     proxy: {
       '/api': {
-        target: 'http://localhost:5000',
+        target: 'https://appoint-dev-kghr.1.us-1.fl0.io/',
         changeOrigin: true,
       },
     },
