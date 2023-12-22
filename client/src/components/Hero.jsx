@@ -35,17 +35,17 @@ function Hero() {
             </form>
           </div>
           <div className="flex flex-wrap gap-2 mt-20 items-center justify-center ">
-                  <Badge size="sm" href="#" color="info">Cardiología</Badge>
-                  <Badge size="sm" href="#" color="gray">Optometría</Badge>
-                  <Badge size="sm" href="#"color="purple">Hortodoncia</Badge>
-                  <Badge size="sm" href="#" color="failure">Psiquiatría</Badge>
-                  <Badge size="sm" href="#" color="success">Pediatría</Badge>
+                  <Badge size="sm" href="#" color="info">Cardiology</Badge>
+                  <Badge size="sm" href="#" color="gray">Optometry</Badge>
+                  <Badge size="sm" href="#"color="purple">Orthodontics</Badge>
+                  <Badge size="sm" href="#" color="failure">Psychiatry</Badge>
+                  <Badge size="sm" href="#" color="success">Pediatrics</Badge>
                 </div>
                 <div className="flex flex-wrap gap-2 mt-10 items-center justify-center ">
-                  <Badge size="sm" href="#" color="success">Radiografía</Badge>
-                  <Badge size="sm" href="#"color="warning">Urología</Badge>
-                  <Badge size="sm" href="#" color="indigo">Ecografía</Badge>
-                  <Badge size="sm" href="#" color="pink">Endoscopia</Badge>
+                  <Badge size="sm" href="#" color="success">Radiography</Badge>
+                  <Badge size="sm" href="#"color="warning">Urology</Badge>
+                  <Badge size="sm" href="#" color="indigo">Sonography</Badge>
+                  <Badge size="sm" href="#" color="pink">Endoscopy</Badge>
                 </div>
         </div>
       </main>
