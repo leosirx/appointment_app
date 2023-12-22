@@ -21,6 +21,7 @@ const ScheduleScreen = () => {
         const schedule = await axios.get(`/api/appointments/customer/${userInfo._doc._id}`)
         return schedule.data;
     };
+    
 
     const { data: scheduleData = [], isLoading, error, refetch } = useQuery(['appointments'], fetchSchedule, {
         keepPreviousData: true,

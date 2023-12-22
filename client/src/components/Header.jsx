@@ -42,7 +42,7 @@ function Header() {
                                             <img className="ml-3 w-8 h-8 rounded-full" src="/user.png" alt="user photo" />
                                         </Dropdown.Header>
                                         <Dropdown.Item>
-                                            <a href="http://localhost:3000/schedule" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+                                            <a href="/http://localhost:3000/schedule" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
                                         </Dropdown.Item>
                                         <Dropdown.Item>
                                             <a href="/profile" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Profile</a>

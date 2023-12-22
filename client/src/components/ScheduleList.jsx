@@ -24,7 +24,7 @@ const ScheduleList = ({refetch, scheduleData}) => {
         await axios.delete(`/api/appointments/${appointmentsId}`)
         refetch();
     }
-
+    
     return (
 
         <>
