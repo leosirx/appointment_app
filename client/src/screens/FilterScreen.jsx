@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Card, Avatar } from 'flowbite-react';
 import { useQuery } from 'react-query';
 import axios from 'axios';
-import InfiniteScroll from 'react-infinite-scroll-component';
 import { useLocation } from 'react-router-dom';
 import FormContainer from '../components/FormContainer';
 import { Link } from "react-router-dom";
@@ -83,14 +82,7 @@ const FilterScreen = () => {
           </div>
           ) : (
         
-          <InfiniteScroll
-            dataLength={specialists.length}
-            next={() => setPage(prevPage => prevPage + 1)}
-            hasMore={!isLoading && specialists.length === page * 9}
-            loader={<p className='text-center mt-10'>Loading...</p>}
-            endMessage={<p className='text-center mt-10'>No hay más resultados.</p>}
-            scrollThreshold={0.7}
-          >
+          
             <div className="grid md:grid-cols-3 place-items-center gap-4">
               {(specialists || []).map((specialist, i) => {
                 console.log(specialist);
@@ -150,7 +142,7 @@ const FilterScreen = () => {
                 );
               })}
             </div>
-          </InfiniteScroll>
+    
         )}  
         </section>
       </FormContainer>
