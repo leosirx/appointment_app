@@ -9,7 +9,7 @@ const customerSchema = mongoose.Schema(
       },
       lastName: {
         type: String,
-        required: true
+        required: false
       },
       description: {
         type: String,

@@ -46,7 +46,7 @@ const authCustomer = asyncHandler(async (req, res) => {
 });
 
 // @desc    Register a new specialsit
-// @route   POST /api/specialists
+// @route   POST /api/cutomers
 // @access  Public
 const registerCustomer = asyncHandler(async (req, res) => {
   const { firstName, lastName, description, phone, email, password, birthday, age, role, active, cityId } = req.body;

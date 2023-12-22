@@ -49,7 +49,7 @@ export default function Appointment() {
       }
     }
   }
-  console.log(data);
+  console.log("Data", data);
 
   useEffect(() => {
     const appointment = async () => {
@@ -170,13 +170,13 @@ export default function Appointment() {
             </tr>
           </thead>
           <tbody>
-            {filterData.map((dat) => (
+            {(filterData || []).map((dat) => (
               <tr
                 key={dat._id}
                 className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
               >
                 <td className="px-4 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  {dat.customerId.firstName} {dat.customerId.lastName}
+                  {dat.customerId ? dat.customerId.firstName : "no name"} | {dat.customerId ? dat.customerId.lastName : "no last name"}
                 </td>
                 <td className="px-4 py-4">{dat.startTime.slice(0,10)}</td>
                 <td className="px-4 py-4">{dat.startTime.slice(-5)} - {dat.endTime.slice(-5)}</td>
