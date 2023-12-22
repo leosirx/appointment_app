@@ -35,7 +35,6 @@ app.use(cookieParser());
 app.use('/api/users', userRoutes);
 app.use('/api/customers', customerRoutes);
 app.use('/api/specialists', specialistRoutes);
-app.use('/api/customers', customer);
 app.use('/api/city', cityRoutes);
 app.use('/api/specialty', specialtyRoutes);
 app.use('/api/diary', diaryRoutes);
