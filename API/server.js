@@ -35,7 +35,6 @@ app.use(cookieParser());
 app.use('/api/users', userRoutes);
 app.use('/api/customers', customerRoutes);
 app.use('/api/specialists', specialistRoutes);
-app.use('/api/customers', customer);
 app.use('/api/city', cityRoutes);
 app.use('/api/specialty', specialtyRoutes);
 app.use('/api/diary', diaryRoutes);
@@ -46,7 +45,7 @@ app.use('/api/appointments', appointmentRoutes);
 if (process.env.MODE_ENV === 'production') {
   const __dirname = path.resolve();
   app.use(express.static(path.join(__dirname, '/client/dist')));
-
+  console.log(process.env.MODE_ENV);
   app.get('*', (req, res) =>
     res.sendFile(path.resolve(__dirname, 'client', 'dist', 'index.html'))
   );
