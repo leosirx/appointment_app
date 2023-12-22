@@ -16,12 +16,6 @@ const rowsByPage = 3
 const ScheduleList = ({refetch, scheduleData}) => {
     const [currentPage, setCurrentPage] = useState(1);
 
-    
-    
-    
-
-    console.log(scheduleData)
-
     const initialRowIndex = (currentPage - 1) * rowsByPage
     const finalRowIndex = currentPage * rowsByPage
     const numberOfPages = Math.ceil(scheduleData.length / rowsByPage);
@@ -47,7 +41,7 @@ const ScheduleList = ({refetch, scheduleData}) => {
                     <Table.Body className="divide-y">
 
                         {scheduleData.slice(initialRowIndex, finalRowIndex).map((schedule) => (
-                            <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                            <Table.Row key={schedule._id}  className="bg-white dark:border-gray-700 dark:bg-gray-800">
                                 <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
                                     {schedule.specialistId.specialtyId.name}
                                 </Table.Cell>

@@ -6,15 +6,19 @@ import { Dropdown } from 'flowbite-react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { useQuery } from 'react-query';
+import { useNavigate } from 'react-router-dom';
+
 
 
 
 const ScheduleScreen = () => {
 
     const { userInfo } = useSelector((state) => state.auth);
-    
+
+    const navigate = useNavigate();
+   
     const fetchSchedule = async () => {
-        const schedule = await axios.get(`/api/appointments/customer/${userInfo._id}`)
+        const schedule = await axios.get(`/api/appointments/customer/${userInfo._doc._id}`)
         return schedule.data;
     };
 
@@ -30,6 +34,11 @@ const ScheduleScreen = () => {
           && (selectedSpecialty === "All Specialties"  || schedule.specialistId.specialtyId.name === selectedSpecialty)
       );
    
+    const handlerNewAppointment = () => {
+        navigate("/filter?search=")
+
+    };
+
 
 
     return (
@@ -64,7 +73,7 @@ const ScheduleScreen = () => {
 
                     
 
-                    <Button>New Appoinment</Button>
+                    <Button onClick={()=>  {handlerNewAppointment()  } }>New Appoinment</Button>
                     {/* this button send to new appointments page */}
 
                 </div>
