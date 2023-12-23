@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { toast } from 'react-toastify'; 
 
 
 const AppointmentForm = ({ selectedSlot, selectedDate, availability, onSubmit }) => {
@@ -37,7 +37,7 @@ const AppointmentForm = ({ selectedSlot, selectedDate, availability, onSubmit })
     const formData = {
       customerName, 
       comments,
-      customerId: '6578c8ffbf22ef4104a32c84',
+      customerId: userInfo._doc._id,
       specialistId: specialistId,
       availabilityId: selectedSlot._id, 
       startTime: `${selectDate}${selectedSlot.startTime}`,

@@ -20,23 +20,16 @@ const LoginScreen = () => {
     
     useEffect(() => {
         if (userInfo) {
-          // If userInfo is available, check for the location state
-          if (location.state) {
-            if (location.state.from === 'abailability') {
-              // Redirect back to the abailability screen with stored form data
-              navigate(`/abailability/${location.state.formData.specialistId}`);
-              
-            } else {
-              // If not coming from the abailability screen, redirect to the default location
-              navigate('/');
-            }
-          } else {
-            // If there is no location state, redirect to the default location
+
+            if (userInfo._doc.role === "specialist") {
+                navigate(`/specialist/availability`)
+            }else {
             navigate('/');
-          }
+            }
         }
-      }, [navigate, userInfo, location.state]);
-    
+    }, [navigate, userInfo]);
+    console.log(userInfo)
+
 
     const submitHandler = async (e) => {
         e.preventDefault();

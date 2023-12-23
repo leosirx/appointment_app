@@ -1,28 +1,26 @@
 import {  Routes, Route, Outlet } from "react-router-dom";
 import DashboardSlideBar from "../components/specialist/DashboarSlideBar";
 
-import Abailability from "../components/specialist/views/Abailability";
-import Appointments from "../components/specialist/views/Appointments";
-import Profile from "../screens/ProfileScreen";
-import FormContainer from '../components/FormContainer';
+
+import Availability from "../components/specialist/views/Availability";
+import Appointment from "../components/specialist/views/Appointment";
+import Profile from "../components/specialist/views/profile/Profile";
+
 
 export default function SpecialistScreen() {
   return (
     <>
-        <FormContainer>
-          <div className="grid grid-flow-col auto-cols-max">
-            <div className="mt-14">
-              <DashboardSlideBar />
-            </div>
-            <div className="ml-10 mt-20" >
-            <Routes>
-              <Route path="/abailability" element={<Abailability />} />
-              <Route path="/appointments" element={<Appointments />} />
-              <Route path="/profile" element={<Profile />} />
-            </Routes>
-            </div>
-          </div>
-        </FormContainer>  
+
+        <DashboardSlideBar />
+        
+          <Routes>
+          <Route path="/availability" element={<Availability />} />
+          <Route path="/appointment" element={<Appointment />} />
+          <Route path="/profile" element={<Profile />} />
+          </Routes>
+    
+          <Outlet /> 
+
     </>
   );
 }

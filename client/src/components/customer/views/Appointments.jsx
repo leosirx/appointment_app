@@ -6,9 +6,11 @@ import { toast }  from  'react-toastify'
 import { useParams } from 'react-router-dom';
 import { Table } from 'flowbite-react';
 import { useQuery } from 'react-query';
+import { useDispatch, useSelector } from 'react-redux'; 
+
 
 const fetchAvailability = async () => {
-  const response = await axios.get('/api/appointments/customer/654ea1d7e5b60840a6ca70be').catch(() => {
+  const response = await axios.get(`/api/appointments/customer/${id}`).catch(() => {
     throw new Error('Error fetching appointments');
   });
   return response.data;
