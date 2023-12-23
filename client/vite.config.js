@@ -9,7 +9,7 @@ export default defineConfig({
     port: 3000,
     proxy: {
       '/api': {
-        target: 'https://appoint-dev-kghr.1.us-1.fl0.io/',
+        target: 'http://appoint-dev-kghr.1.us-1.fl0.io/',
         changeOrigin: true,
       },
     },
