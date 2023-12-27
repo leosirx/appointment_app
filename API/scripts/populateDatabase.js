@@ -5,10 +5,6 @@ import City from '../models/cityModel.js';
 import Specialty from '../models/specialtyModel.js';
 import Customer from '../models/customerModel.js';
 
-// Conexión a la base de datos
-mongoose.connect('mongodb+srv://rodadev:polimero@cluster0.uzggi56.mongodb.net/', {
-  useNewUrlParser: true,
-});
 
 // Datos ficticios
 const cities = ['Bogota', 'Lima', 'Buenos Aires', 'Caracas', 'Mexico DF'];

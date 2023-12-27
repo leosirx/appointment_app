@@ -5,7 +5,10 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   build: { 
+    outDir: "build",
     chunkSizeWarningLimit: 1600,
+    assetsDir: 'assets',
+    assetsInlineLimit: 4096,
   },
   server: {
     port: 3000,
@@ -19,4 +22,5 @@ export default defineConfig({
   manualChunks: {
 		lodash: ['lodash']
 	},
+  base: '/'
 })
