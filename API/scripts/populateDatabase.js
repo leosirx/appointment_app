@@ -5,6 +5,9 @@ import City from '../models/cityModel.js';
 import Specialty from '../models/specialtyModel.js';
 import Customer from '../models/customerModel.js';
 
+// Conexión a la base de datos
+mongoose.connect('mongodb+srv://leosirx:knuaRLBQoIxtFI0C@cluster0.balqhap.mongodb.net/', {
+  useNewUrlParser: true,
 
 // Datos ficticios
 const cities = ['Bogota', 'Lima', 'Buenos Aires', 'Caracas', 'Mexico DF'];
@@ -20,7 +23,18 @@ const populateDatabase = async () => {
     const createdCities = await City.create(cities.map(name => ({ name })));
 
     // Crear especialidades
-    const createdSpecialities = await Specialty.create(specialities.map(name => ({ name })));
+    // Crear especialidades
+const createdSpecialities = [];
+for (const name of specialities) {
+  const existingSpecialty = await Specialty.findOne({ name });
+  if (!existingSpecialty) {
+    const newSpecialty = await Specialty.create({ name });
+    createdSpecialities.push(newSpecialty);
+  } else {
+    createdSpecialities.push(existingSpecialty);
+  }
+}
+
 
     // Crear especialistas
     const specialistsData = Array.from({ length: 50 }, () => ({
