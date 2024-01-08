@@ -8,7 +8,6 @@ import Customer from '../models/customerModel.js';
 // Conexión a la base de datos
 mongoose.connect('mongodb+srv://leosirx:knuaRLBQoIxtFI0C@cluster0.balqhap.mongodb.net/', {
   useNewUrlParser: true,
-});
 
 // Datos ficticios
 const cities = ['Bogota', 'Lima', 'Buenos Aires', 'Caracas', 'Mexico DF'];

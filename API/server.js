@@ -45,7 +45,7 @@ app.use('/api/appointments', appointmentRoutes);
 if (process.env.MODE_ENV === 'production') {
   const __dirname = path.resolve();
   app.use(express.static(path.join(__dirname, '/client/dist')));
-
+  console.log(process.env.MODE_ENV);
   app.get('*', (req, res) =>
     res.sendFile(path.resolve(__dirname, 'client', 'dist', 'index.html'))
   );
