@@ -32,9 +32,11 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(cookieParser());
 
+//deploy test
 app.get('/ping', async (req, res) => {
   res.status(200).send('pong');
 })
+
 app.use('/api/users', userRoutes);
 app.use('/api/customers', customerRoutes);
 app.use('/api/specialists', specialistRoutes);
